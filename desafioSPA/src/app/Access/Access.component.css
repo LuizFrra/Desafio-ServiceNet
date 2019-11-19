@@ -1,0 +1,18 @@
+.p-3{
+    padding: 0.8rem!important;
+}
+
+.card-width {
+    width: 25rem;
+}
+
+.buttons img{
+    width: 30px;
+    height: 30px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

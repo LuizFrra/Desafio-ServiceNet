@@ -1,0 +1,13 @@
+.p-3{
+    padding: 0.8rem!important;
+}
+
+.form-login{
+    width: 100%;
+    max-width: 250px;
+}
+
+.btn-size{
+    width: 100px;
+    max-width: 100px;
+}

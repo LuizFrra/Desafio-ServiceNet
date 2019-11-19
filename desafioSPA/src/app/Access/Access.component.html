@@ -1,0 +1,121 @@
+<div class="d-flex flex-row w-100">
+  <nav class="bg-dark p-3 flex-grow-0 column">
+    <img src="../../assets/img/serviceNetLogo.png" class="img-fluid" alt="" />
+  </nav>
+  <div class="bg-dark flex-grow-1 d-flex flex-row justify-content-end"></div>
+</div>
+
+<!-- cards -->
+
+<div class=" d-flex flex-row flex-wrap justify-content-start">
+  <div class="card m-5 card-width">
+    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+      <a href="#" data-toggle="modal" data-target="#modalCadastroUsuario" class="mb-3">
+        <img src="../../assets/img/plus.svg" width="72" height="72" alt="" />
+      </a>
+      <p class="card-text">Adicionar Cliente</p>
+    </div>
+  </div>
+
+  <div class="card m-5 card-width">
+    <div class="card-body">
+      <h5 class="card-title">Maria Joana</h5>
+      <p class="card-text">Telefone : 81992332232</p>
+      <p class="card-text">Estado : paraiba</p>
+      <p class="card-text">Pais : mangabeira</p>
+      <div class="buttons flex-row d-flex justify-content-around">
+        <a href="#"><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
+        <a href="#"><img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" /></a>
+        <a href="#"><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card m-5 card-width">
+    <div class="card-body">
+      <h5 class="card-title">Luiz Alexsandro</h5>
+      <p class="card-text">Telefone : 81992332232</p>
+      <p class="card-text">Estado : paraiba</p>
+      <p class="card-text">Pais : mangabeira</p>
+      <div class="buttons flex-row d-flex justify-content-around">
+        <a href="#"><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
+        <a href="#"><img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" /></a>
+        <a href="#"><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card m-5 card-width">
+    <div class="card-body">
+      <h5 class="card-title">Mario Paz</h5>
+      <p class="card-text">Telefone : 81992332232</p>
+      <p class="card-text">Estado : paraiba</p>
+      <p class="card-text">Pais : mangabeira</p>
+      <div class="buttons flex-row d-flex justify-content-around">
+        <a href="#"><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
+        <a href="#"><img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" /></a>
+        <a href="#"><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Cadastrar Usuario -->
+<div class="modal fade" id="modalCadastroUsuario" tabindex="-1" role="dialog" aria-labelledby="modalCadastroUsuario"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cadastrar Usuário</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="Nome">Nome</label>
+              <input type="email" class="form-control" id="Nome" placeholder="Nome">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="Telefone">Telefone</label>
+              <input type="number" class="form-control" id="Telefone" placeholder="Telefone">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="Endereco">Endereço</label>
+            <input type="text" class="form-control" id="Endereco" placeholder="Endereço" disabled>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="Cidade">Cidade</label>
+              <input type="text" class="form-control" id="Cidade" disabled>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="Pais">Pais</label>
+                <input type="text" class="form-control" id="Pais">
+              </div>
+            <div class="form-group col-md-4">
+              <label for="Estado">Estado</label>
+              <select id="Estado" class="form-control" disabled>
+                <option selected>Escolha</option>
+                <option>...</option>
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="inputZip">CEP</label>
+              <input type="text" class="form-control" id="CEP">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Fechar
+        </button>
+        <button type="button" class="btn btn-primary">Finalizar Cadastro</button>
+      </div>
+    </div>
+  </div>
+</div>
