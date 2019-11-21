@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { AuthService } from '../_services/Auth/Auth.service';
+import { Router } from "@angular/router"
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-Home',
@@ -10,18 +11,23 @@ import { AuthService } from '../_services/Auth/Auth.service';
 })
 export class HomeComponent implements OnInit {
 
-  @ViewChild('registerForm', { static: true}) registerForm: NgForm;
-  @ViewChild('loginForm', { static: true}) loginForm: NgForm;
+  @ViewChild('registerForm', { static: true }) registerForm: NgForm;
+  @ViewChild('loginForm', { static: true }) loginForm: NgForm;
 
   EmailIsValid: boolean;
   PasswordIsValid: boolean;
   NameIsValid: boolean;
-  modelRegister: any = { };
-  modelLogin: any = { };
+  modelRegister: any = {};
+  modelLogin: any = {};
+  FailInLogin: boolean;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private route: Router) { }
 
   ngOnInit() {
+    if (this.authService.isAuthenticated) {
+      this.route.navigate(['/acesso']);
+    }
+
     let Name;
     let Email;
     let Password;
@@ -37,7 +43,7 @@ export class HomeComponent implements OnInit {
       }
       if (change.Password !== undefined && change.Password !== Password) {
         Password = change.Password;
-        this.PasswordIsValid = Password.length > 7  ? true : false;
+        this.PasswordIsValid = Password.length > 7 ? true : false;
       }
     });
   }
@@ -46,7 +52,7 @@ export class HomeComponent implements OnInit {
     if (this.EmailIsValid && this.PasswordIsValid && this.NameIsValid) {
       this.authService.register(this.modelRegister).subscribe(response => {
         console.log('Registrado Com Sucesso');
-      }, error =>{
+      }, error => {
         console.log('Erro ao Registrar:\n');
         console.log(error);
       });
@@ -57,7 +63,13 @@ export class HomeComponent implements OnInit {
   login() {
     console.log(this.modelLogin);
     this.authService.login(this.modelLogin).subscribe(response => {
-      console.log('Logged In');
+      if (response === 200) {
+        console.log('logged In');
+        this.route.navigate(['/acesso']);
+      }
+    }, error => {
+      console.log(error.status);
+      this.FailInLogin = true;
     });
   }
 

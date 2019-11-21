@@ -49,6 +49,9 @@ namespace DesafioServiceNetAPI.Repository.Auth
         {
             var user = await desafioContext.Users.FirstOrDefaultAsync(u => u.Email == email);
 
+            if (user == null)
+                return null;
+
             var IsPasswordCorrect = BCrypt.Net.BCrypt.Verify(password, user.Password);
 
             if(IsPasswordCorrect)

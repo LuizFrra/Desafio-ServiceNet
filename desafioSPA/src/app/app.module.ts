@@ -7,6 +7,8 @@ import { AccessComponent } from './Access/Access.component';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './_services/Auth/Auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { GuardService } from './_services/Guard/Guard.service';
+import { JwtHelperService, JwtModuleOptions, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
    declarations: [
@@ -22,6 +24,9 @@ import { HttpClientModule } from '@angular/common/http';
    ],
    providers: [
       AuthService,
+      GuardService,
+      { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+      JwtHelperService
    ],
    bootstrap: [
       AppComponent

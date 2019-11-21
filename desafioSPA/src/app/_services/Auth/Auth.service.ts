@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpResponse, HttpEvent, HttpResponseBase } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class AuthService {
 
   private baseURl: string;
 
-constructor(private http: HttpClient) {
+constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
   this.baseURl = environment.hostName + ':' + environment.port;
 }
 
@@ -34,9 +35,19 @@ constructor(private http: HttpClient) {
           if (token) {
             localStorage.setItem('token', token);
           }
+          return response.status;
         }
       })
     );
+  }
+
+  public isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    const isExpired = this.jwtHelper.isTokenExpired(token);
+    if (isExpired) {
+      localStorage.removeItem('token');
+    }
+    return !isExpired;
   }
 
 }
