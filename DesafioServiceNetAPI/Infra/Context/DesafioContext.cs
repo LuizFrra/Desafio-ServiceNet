@@ -1,11 +1,12 @@
-﻿using desafioAPI.Models;
+﻿using DesafioServiceNetAPI.Infra.EntityConfig;
+using DesafioServiceNetAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace desafioAPI.Infra.Context
+namespace DesafioServiceNetAPI.Infra.Context
 {
     public class DesafioContext : DbContext
     {
@@ -19,6 +20,8 @@ namespace desafioAPI.Infra.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>().ToTable("tbl_users");
+
+            builder.ApplyConfiguration(new UserConfig());
         }
     }
 }
