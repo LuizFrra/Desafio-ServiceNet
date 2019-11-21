@@ -10,11 +10,11 @@
         </h1>
       <div class="form-group row flex-grow-0">
           <label for="Email">E-mail</label>
-          <input type="email" class="form-control" id="Email" placeholder="Endereço de Email">
+          <input type="email" class="form-control" id="EmailLogin" placeholder="Endereço de Email">
       </div>
       <div class="form-group row flex-grow-0">
           <label for="Password">Senha</label>
-          <input type="password" class="form-control" id="Password" placeholder="Senha">
+          <input type="password" class="form-control" id="PasswordLogin" placeholder="Senha">
           <small id="PasswordHelp" class="form-text text-muted">Nunca compartilhe sua senha com ninguém.</small>
       </div>
       <div class="form-group row flex-grow-0 d-flex flex-row justify-content-between">
@@ -29,32 +29,38 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="cadastroUsuario" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+<div  class="modal fade" id="cadastroUsuario" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="ModalLabel">Cadastrar-se</h5>
         </div>
         <div class="modal-body">
-          <form action="" class="d-flex flex-column justify-content-center">
+          <form #registerForm="ngForm" class="d-flex flex-column justify-content-center">
               <div class="form-group flex-grow-0 justify-content-center">
                   <label for="Nome">Nome</label>
-                  <input type="texit" class="form-control" id="Nome" placeholder="Nome">
-              </div>
+                  <input type="text" [ngClass]="{'is-valid': NameIsValid, 'is-invalid': NameIsValid === false, 'form-control': true}" name="Name" id="Nome" [(ngModel)]="modelRegister.Name" placeholder="Nome">
+                  <div *ngIf="NameIsValid" class="valid-feedback"> Lindo Nome !!! </div>
+                  <div *ngIf="!NameIsValid" class="invalid-feedback"> Por favor, forneça um nome. </div>
+                </div>
               <div class="form-group flex-grow-0 justify-content-center">
                   <label for="Email">E-mail</label>
-                  <input type="email" class="form-control" id="Email" placeholder="Endereço de Email">
-              </div>
+                  <input type="email" name="Email" [ngClass]="{'is-valid': EmailIsValid, 'is-invalid': EmailIsValid === false, 'form-control': true}" id="Email" [(ngModel)]="modelRegister.Email" placeholder="Endereço de Email">
+                  <div *ngIf="EmailIsValid" class="valid-feedback"> Excelente !!! </div>
+                  <div *ngIf="!EmailIsValid" class="invalid-feedback"> Por favor, forneça um Email válido, exemplo : example@example.com </div>
+                </div>
               <div class="form-group flex-grow-0 justify-content-center">
                   <label for="Password">Senha</label>
-                  <input type="password" class="form-control" id="Password" placeholder="Senha">
+                  <input type="password" name="Password" [ngClass]="{'is-valid': PasswordIsValid, 'is-invalid': PasswordIsValid === false, 'form-control': true}" id="Password" placeholder="Senha" [(ngModel)]="modelRegister.Password">
+                  <div *ngIf="PasswordIsValid" class="valid-feedback"> Excelente !!! </div>
+                  <div *ngIf="!PasswordIsValid" class="invalid-feedback"> Sua Senha Deve Conter No Mínimo 8 Caractéres.</div>
                   <small id="PasswordHelp" class="form-text text-muted">Nunca compartilhe sua senha com ninguém.</small>
               </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary">Finalizar Cadastro</button>
+          <button type="button" class="btn btn-primary" (click)="register()">Finalizar Cadastro</button>
         </div>
       </div>
     </div>
