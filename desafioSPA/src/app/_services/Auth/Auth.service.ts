@@ -50,4 +50,15 @@ constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     return !isExpired;
   }
 
+  public getUserName(): string {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const tokenDecode = this.jwtHelper.decodeToken(token);
+      if (tokenDecode.user_name) {
+        return tokenDecode.user_name;
+      }
+    }
+    return '';
+  }
+
 }
