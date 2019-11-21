@@ -10,7 +10,8 @@ import { AuthService } from '../_services/Auth/Auth.service';
 })
 export class HomeComponent implements OnInit {
 
-  @ViewChild('registerForm', { static: true}) ngForm: NgForm;
+  @ViewChild('registerForm', { static: true}) registerForm: NgForm;
+  @ViewChild('loginForm', { static: true}) loginForm: NgForm;
 
   EmailIsValid: boolean;
   PasswordIsValid: boolean;
@@ -25,7 +26,7 @@ export class HomeComponent implements OnInit {
     let Email;
     let Password;
     const emailRegex = new RegExp('^[^\s@]+@[^\s@]+\.[^\s@]+$');
-    this.ngForm.valueChanges.subscribe(change => {
+    this.registerForm.valueChanges.subscribe(change => {
       if (change.Name !== undefined && change.Name !== Name) {
         Name = change.Name;
         this.NameIsValid = Name.length === 0 ? false : true;
@@ -51,6 +52,13 @@ export class HomeComponent implements OnInit {
       });
       this.zerarInputs();
     }
+  }
+
+  login() {
+    console.log(this.modelLogin);
+    this.authService.login(this.modelLogin).subscribe(response => {
+      console.log('Logged In');
+    });
   }
 
   private zerarInputs() {

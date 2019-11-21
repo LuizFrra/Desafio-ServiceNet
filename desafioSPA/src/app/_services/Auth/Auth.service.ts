@@ -15,11 +15,25 @@ constructor(private http: HttpClient) {
 }
 
   register(model: any) {
-    console.log(this.baseURl + '/api/home/register');
+    console.log(this.baseURl + '/api/auth/register');
     return this.http.post(this.baseURl + '/api/auth/register', model, { observe: 'response' }).pipe(
       map((response: HttpResponseBase) => {
         if (response.status === 201) {
           console.log('do something');
+        }
+      })
+    );
+  }
+
+  login(model: any) {
+    console.log(this.baseURl + '/api/auth/login');
+    return this.http.post(this.baseURl + '/api/auth/login', model, { observe: 'response'}).pipe(
+      map((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          const token = response.body.token;
+          if (token) {
+            localStorage.setItem('token', token);
+          }
         }
       })
     );
