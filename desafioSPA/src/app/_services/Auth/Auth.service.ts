@@ -18,7 +18,7 @@ constructor(private http: HttpClient) {
     console.log(this.baseURl + '/api/home/register');
     return this.http.post(this.baseURl + '/api/auth/register', model, { observe: 'response' }).pipe(
       map((response: HttpResponseBase) => {
-        if(response.status === 201) {
+        if (response.status === 201) {
           console.log('do something');
         }
       })
