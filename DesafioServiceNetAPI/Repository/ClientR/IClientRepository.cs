@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DesafioServiceNetAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,5 +19,7 @@ namespace DesafioServiceNetAPI.Repository.ClientR
         Task<ICollection<T>> GetByNameAsync(string Name);
 
         Task<ICollection<T>> GetAllAsync();
+
+        Task<CEP> AddCep(CEP Cep);
     }
 }

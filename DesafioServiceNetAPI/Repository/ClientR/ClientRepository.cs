@@ -1,7 +1,6 @@
 ﻿using DesafioServiceNetAPI.Infra.Context;
 using DesafioServiceNetAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +18,12 @@ namespace DesafioServiceNetAPI.Repository.ClientR
 
         public async Task<Client> AddAsync(Client Client)
         {
+            var CepExist = desafioContext.CEP.Any(c => c.CepID == Client.CepId);
+
+            if (!CepExist) return null;
+
             await desafioContext.AddAsync(Client);
+
             var result = await desafioContext.SaveChangesAsync();
 
             if (result == 1)
@@ -71,6 +75,18 @@ namespace DesafioServiceNetAPI.Repository.ClientR
             var result = await desafioContext.SaveChangesAsync();
 
             return result == 1 ? await Task.FromResult(Client) : await Task.FromResult<Client>(null);
+        }
+
+        public async Task<CEP> AddCep(CEP Cep)
+        {
+            var exist = await desafioContext.CEP.AnyAsync(c => c.CepID == Cep.CepID);
+
+            if (exist) return await Task.FromResult(Cep);
+
+            await desafioContext.AddAsync(Cep);
+            await desafioContext.SaveChangesAsync();
+
+            return await Task.FromResult(Cep);
         }
     }
 }

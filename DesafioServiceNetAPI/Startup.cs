@@ -8,6 +8,7 @@ using DesafioServiceNetAPI.JWT.Handler;
 using DesafioServiceNetAPI.JWT.Keys;
 using DesafioServiceNetAPI.Models;
 using DesafioServiceNetAPI.Repository.Auth;
+using DesafioServiceNetAPI.Repository.ClientR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +37,7 @@ namespace DesafioServiceNetAPI
             // BANCO DE DADOS
             services.AddDbContext<DesafioContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IAuthRepository<User>, AuthRepository>();
+            services.AddScoped<IClientRepository<Client>, ClientRepository>();
             // END BANCO DE DADOS
 
             // TOKEN JWT

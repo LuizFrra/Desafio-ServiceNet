@@ -9,10 +9,29 @@ namespace DesafioServiceNetAPI.Models
     {
         public int ClientID { get; set; }
 
-        public DateTime LastUpdate { get; set; }
-
         public User User { get; set; }
 
         public int UserID { get; set; }
+
+        public CEP Cep { get; set; }
+
+        public DateTime LastUpdate { get; set; }
+
+        public Client(string name, string phoneNumber, string address, string numberAddress, string country, int cepId, int userId)
+        {
+            Name = name;
+            PhoneNumber = phoneNumber;
+            Address = address;
+            NumberAddress = numberAddress;
+            Country = country;
+            UserID = userId;
+            UserID = userId;
+            CepId = cepId;
+        }
+
+        public Client()
+        {
+
+        }
     }
 }

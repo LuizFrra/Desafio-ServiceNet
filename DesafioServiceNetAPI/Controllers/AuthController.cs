@@ -53,13 +53,5 @@ namespace DesafioServiceNetAPI.Controller
 
             return Ok(token);
         }
-
-        [Authorize]
-        [HttpGet]
-        public string authTest()
-        {
-            return Guid.NewGuid().ToString();
-        }
-
     }
 }

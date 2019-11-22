@@ -81,8 +81,9 @@ namespace DesafioServiceNetAPI.JWT.Handler
             var issuer = jwtSettings.Issuer;
             var payload = new JwtPayload
             {
-                { "sub", user.UserID },
+                { "sub", Convert.ToString(user.UserID) },
                 { "user_name", user.Name },
+                { "user_id", user.UserID },
                 { "iss",  issuer },
                 { "iat", now },
                 { "nbf", now },
