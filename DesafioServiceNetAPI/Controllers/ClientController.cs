@@ -32,7 +32,16 @@ namespace DesafioServiceNetAPI.Controllers
             if (!rgx.IsMatch(CEP))
                 return BadRequest("CEP Inválido");
 
-            var jsonEndereco = await viaCepService.ObterEnderecoComoJsonAsync(CEP.Replace("-", ""));
+            string jsonEndereco = null;
+            try
+            {
+                jsonEndereco = await viaCepService.ObterEnderecoComoJsonAsync(CEP.Replace("-", ""));
+            }
+            catch (CepInexistenteException e)
+            {
+                jsonEndereco = e.Message;
+                return BadRequest(jsonEndereco);
+            }
 
             return Ok(jsonEndereco);
         }

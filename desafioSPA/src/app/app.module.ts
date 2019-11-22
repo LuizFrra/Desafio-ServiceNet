@@ -6,9 +6,12 @@ import { HomeComponent } from './Home/Home.component';
 import { AccessComponent } from './Access/Access.component';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './_services/Auth/Auth.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GuardService } from './_services/Guard/Guard.service';
 import { JwtHelperService, JwtModuleOptions, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { ClientService } from './_services/Client/Client.service';
+import { HttpInterceptorService } from './_services/HttpInterceptor/HttpInterceptor.service';
+import { PathLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
    declarations: [
@@ -26,7 +29,11 @@ import { JwtHelperService, JwtModuleOptions, JWT_OPTIONS } from '@auth0/angular-
       AuthService,
       GuardService,
       { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-      JwtHelperService
+      JwtHelperService,
+      ClientService,
+      Location,
+      {provide: LocationStrategy, useClass: PathLocationStrategy},
+      { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}
    ],
    bootstrap: [
       AppComponent

@@ -82,36 +82,38 @@
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Telefone">Telefone</label>
-              <input type="number" class="form-control" id="Telefone" placeholder="Telefone">
+              <input type="number" class="form-control" id="Telefone" name="PhoneNumber" [(ngModel)]="modelClientRegister.PhoneNumber">
             </div>
             <div class="form-group col-md-3">
               <label for="inputZip">CEP</label>
-              <input type="text" class="form-control" id="CEP">
+              <input type="text" id="CEP" name="CEP" [(ngModel)]="modelClientRegister.CEP" maxlength="9" (blur)="validCEP()" 
+                        [ngClass]="{'is-valid': CEPIsValid, 'is-invalid': CEPIsValid === false, 'form-control': true}">
+              <div *ngIf="!CEPIsValid" class="invalid-feedback"> CEP Inválido. </div>
             </div>
             <div class="form-group col-md-6">
               <label for="Endereco">Endereço</label>
-              <input type="text" class="form-control" id="Endereco" placeholder="Endereço" disabled>
+              <input type="text" class="form-control" id="Endereco" name="Address" [(ngModel)]="modelClientRegister.Address"
+                      [disabled]="IsAddressPresent">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Numero">Número</label>
-              <input type="number" class="form-control" id="Numero" disabled>
+              <input type="number" class="form-control" id="Numero" name="NumberAddress" [(ngModel)]="modelClientRegister.NumberAddress">
             </div>
             <div class="form-group col-md-3">
               <label for="Cidade">Cidade</label>
-              <input type="text" class="form-control" id="Cidade" disabled>
+              <input type="text" class="form-control" id="Cidade" name="City" [(ngModel)]="modelClientRegister.City" disabled>
             </div>
             <div class="form-group col-md-3">
               <label for="Pais">País</label>
-              <input type="text" class="form-control" id="Pais" disabled>
+              <input type="text" class="form-control" id="Pais" name="Country" [(ngModel)]="modelClientRegister.Country" disabled>
             </div>
             <div class="form-group col-md-3">
               <label for="Estado">Estado</label>
               <!-- onfocus='this.size=10;' onblur='this.size=1;' onchange='this.size=1; this.blur(); -->
-              <select class="form-control" disabled>
-                <option selected>Escolha</option>
-                <option *ngFor="let item of states |keyvalue">{{item.value}}</option>
+              <select class="form-control" name="state" [(ngModel)]="modelClientRegister.State" disabled>
+                <option *ngFor="let item of states |keyvalue" value="{{item.key}}">{{item.value}}</option>
               </select>
             </div>
           </div>

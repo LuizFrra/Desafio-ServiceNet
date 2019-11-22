@@ -1,5 +1,5 @@
 export const states = {
-     AC: 'Acre',
+    AC: 'Acre',
     AL: 'Alagoas',
     AP: 'Amapá',
     AM: 'Amazonas',
