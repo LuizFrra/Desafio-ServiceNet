@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../_services/Auth/Auth.service';
 import { states } from '../Models/States';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-Access',
@@ -9,6 +10,8 @@ import { states } from '../Models/States';
 })
 export class AccessComponent implements OnInit {
 
+  @ViewChild('clientRegister', { static: true }) clientRegister: NgForm;
+  modelClientRegister: any;
   states: any = states;
   constructor(private auth: AuthService) { }
 

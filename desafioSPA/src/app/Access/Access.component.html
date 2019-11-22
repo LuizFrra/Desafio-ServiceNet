@@ -72,11 +72,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form #clientRegister="ngForm">
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="Nome">Nome</label>
-              <input type="email" class="form-control" id="Nome" placeholder="Nome">
+              <input type="email" class="form-control" id="Nome" placeholder="Nome" name="name" [(ngModel)]="modelClientRegister.Name">
             </div>
           </div>
           <div class="form-row">
@@ -109,9 +109,9 @@
             <div class="form-group col-md-3">
               <label for="Estado">Estado</label>
               <!-- onfocus='this.size=10;' onblur='this.size=1;' onchange='this.size=1; this.blur(); -->
-              <select class="form-control">
+              <select class="form-control" disabled>
                 <option selected>Escolha</option>
-                <option *ngFor="let item of states">{{item}}</option>
+                <option *ngFor="let item of states |keyvalue">{{item.value}}</option>
               </select>
             </div>
           </div>
