@@ -22,10 +22,10 @@ export class AccessComponent implements OnInit {
   ngOnInit() {
     const cep = new RegExp('[aA-zZ]+');
     this.clientRegister.form.valueChanges.subscribe(value => {
-      if (cep.test(value.CEP) && value.CEP !== undefined) {
+      if (cep.test(value.CepId) && value.CepId !== undefined) {
         console.log('cep nao ta valido');
         this.CEPIsValid = false;
-      } else if (value.CEP !== undefined && value.CEP !== '') {
+      } else if (value.CepId !== undefined && value.CepId !== '') {
         this.CEPIsValid = true;
       }
     });
@@ -33,13 +33,13 @@ export class AccessComponent implements OnInit {
 
   validCEP() {
     const rgxCep = new RegExp('^[0-9]{5}-?[\\d]{3}$');
-    const CEP =  this.modelClientRegister.CEP;
-    if (!rgxCep.test(CEP)) {
+    const CepId =  this.modelClientRegister.CepId;
+    if (!rgxCep.test(CepId)) {
       this.CEPIsValid = false;
       return;
     }
 
-    this.client.ViaCEP(CEP).subscribe(result => {
+    this.client.ViaCEP(CepId).subscribe(result => {
       this.CEPIsValid = true;
       console.log(result.body);
       this.modelClientRegister.State = result.body.uf;
@@ -61,5 +61,18 @@ export class AccessComponent implements OnInit {
       this.PhoneIsValid = false;
       console.log('invalido');
     } else { this.PhoneIsValid = true; }
+  }
+
+  AddClient() {
+    this.modelClientRegister.PhoneNumber = this.modelClientRegister.PhoneNumber.toString();
+    this.modelClientRegister.CepId = parseInt(this.modelClientRegister.CepId, 10);
+    this.modelClientRegister.NumberAddress = this.modelClientRegister.NumberAddress.toString();
+    console.log(this.modelClientRegister);
+    if (this.CEPIsValid && this.PhoneIsValid && this.modelClientRegister.Name && this.modelClientRegister.Country
+        && this.modelClientRegister.NumberAddress) {
+          this.client.AddClient(this.modelClientRegister).subscribe(result => {
+            console.log(result);
+          });
+    }
   }
 }

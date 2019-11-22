@@ -24,4 +24,12 @@ export class ClientService {
   ));
 }
 
+  AddClient(model: any) {
+    return this.http.post(this.baseURl + '/api/client/add', model, { observe: 'response'}).pipe(
+      map((response: HttpResponse<any>) => {
+        console.log(response);
+      }
+      ));
+  }
+
 }
