@@ -3,7 +3,6 @@ import { AuthService } from '../_services/Auth/Auth.service';
 import { states } from '../Models/States';
 import { NgForm } from '@angular/forms';
 import { ClientService } from '../_services/Client/Client.service';
-import { strictEqual } from 'assert';
 
 @Component({
   selector: 'app-Access',
@@ -55,7 +54,8 @@ export class AccessComponent implements OnInit {
   }
 
   validPhone() {
-    const rgx = /^(\+[0-9]{2,3})?((\([1-9]{2}\))|([1-9]{2}))( ?9?[0-9]{4}-?[0-9]{4})$/gm;
+    // (\+[0-9]{2,3})?
+    const rgx = /^((\([1-9]{2}\))|([1-9]{2}))( ?9?[0-9]{4}-?[0-9]{4})$/gm;
     const phoneNumber = this.modelClientRegister.PhoneNumber;
     if (!rgx.test(phoneNumber)) {
       this.PhoneIsValid = false;
