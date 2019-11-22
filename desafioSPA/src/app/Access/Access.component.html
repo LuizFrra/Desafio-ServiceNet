@@ -24,40 +24,29 @@
       <p class="card-text">Estado : paraiba</p>
       <p class="card-text">Pais : mangabeira</p>
       <div class="buttons flex-row d-flex justify-content-around">
-        <a href="#"><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
-        <a href="#"><img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" /></a>
-        <a href="#"><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
+        <a (click)="teste()"><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
+        <a><img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" /></a>
+        <a><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
       </div>
     </div>
   </div>
 
-  <div class="card m-5 card-width">
-    <div class="card-body">
-      <h5 class="card-title">Luiz Alexsandro</h5>
-      <p class="card-text">Telefone : 81992332232</p>
-      <p class="card-text">Estado : paraiba</p>
-      <p class="card-text">Pais : mangabeira</p>
-      <div class="buttons flex-row d-flex justify-content-around">
-        <a href="#"><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
-        <a href="#"><img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" /></a>
-        <a href="#"><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
+  <ng-container *ngFor="let client of clients">
+    <div class="card m-5 card-width">
+      <div class="card-body">
+        <h5 class="card-title">{{client.name}}</h5>
+        <p class="card-text">Telefone : {{client.phoneNumber}}</p>
+        <p class="card-text">Endereço : {{client.address}}</p>
+        <p class="card-text">Pais : mangabeira</p>
+        <div class="buttons flex-row d-flex justify-content-around">
+          <a (click)="teste(client.clientID)"><img src="../../assets/img/document.svg" height="30px" width="30px"
+              alt="" /></a>
+          <a href="#"><img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" /></a>
+          <a href="#"><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="card m-5 card-width">
-    <div class="card-body">
-      <h5 class="card-title">Mario Paz</h5>
-      <p class="card-text">Telefone : 81992332232</p>
-      <p class="card-text">Estado : paraiba</p>
-      <p class="card-text">Pais : mangabeira</p>
-      <div class="buttons flex-row d-flex justify-content-around">
-        <a href="#"><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
-        <a href="#"><img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" /></a>
-        <a href="#"><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
-      </div>
-    </div>
-  </div>
+  </ng-container>
 </div>
 
 <!-- Modal Cadastrar Usuario -->
@@ -76,32 +65,35 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="Nome">Nome</label>
-              <input type="email" class="form-control" placeholder="Nome" name="name" [(ngModel)]="modelClientRegister.Name">
+              <input type="email" class="form-control" placeholder="Nome" name="name"
+                [(ngModel)]="modelClientRegister.Name">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Telefone">Telefone</label>
-              <input type="number" (blur)="validPhone()" class="form-control" name="PhoneNumber" [(ngModel)]="modelClientRegister.PhoneNumber"
-                  [ngClass]="{'is-valid': PhoneIsValid, 'is-invalid': PhoneIsValid === false, 'form-control': true}">
+              <input type="number" (blur)="validPhone()" class="form-control" name="PhoneNumber"
+                [(ngModel)]="modelClientRegister.PhoneNumber"
+                [ngClass]="{'is-valid': PhoneIsValid, 'is-invalid': PhoneIsValid === false, 'form-control': true}">
               <div *ngIf="!PhoneIsValid" class="invalid-feedback"> Telefone Inválido. </div>
             </div>
             <div class="form-group col-md-3">
               <label for="inputZip">CEP</label>
-              <input type="text" name="CEP" [(ngModel)]="modelClientRegister.CepId" maxlength="9" (blur)="validCEP()" 
-                        [ngClass]="{'is-valid': CEPIsValid, 'is-invalid': CEPIsValid === false, 'form-control': true}">
+              <input type="text" name="CEP" [(ngModel)]="modelClientRegister.CepId" maxlength="9" (blur)="validCEP()"
+                [ngClass]="{'is-valid': CEPIsValid, 'is-invalid': CEPIsValid === false, 'form-control': true}">
               <div *ngIf="!CEPIsValid" class="invalid-feedback"> CEP Inválido. </div>
             </div>
             <div class="form-group col-md-6">
               <label for="Endereco">Endereço</label>
               <input type="text" class="form-control" name="Address" [(ngModel)]="modelClientRegister.Address"
-                      [disabled]="IsAddressPresent">
+                [disabled]="IsAddressPresent">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Numero">Número</label>
-              <input type="number" class="form-control" name="NumberAddress" [(ngModel)]="modelClientRegister.NumberAddress">
+              <input type="number" class="form-control" name="NumberAddress"
+                [(ngModel)]="modelClientRegister.NumberAddress">
             </div>
             <div class="form-group col-md-3">
               <label for="Cidade">Cidade</label>
@@ -128,8 +120,12 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Fechar
         </button>
-        <button type="button" class="btn btn-primary" (click)="AddClient()" >Finalizar Cadastro</button>
+        <button type="button" class="btn btn-primary" (click)="AddClient()">Finalizar Cadastro</button>
       </div>
     </div>
   </div>
 </div>
+<!-- Fim Modal Cadastrar Usuario -->
+
+<!-- Modal Read Usuario -->
+<!-- Fim Modal Read Usuario -->

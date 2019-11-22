@@ -17,9 +17,16 @@ export class AccessComponent implements OnInit {
   CEPIsValid: boolean;
   IsAddressPresent = true;
   PhoneIsValid: boolean;
+  clients: any;
   constructor(private auth: AuthService, private client: ClientService) { }
 
   ngOnInit() {
+
+    this.client.GetClients().subscribe(result => {
+      console.log(result);
+      this.clients = result;
+    });
+
     const cep = new RegExp('[aA-zZ]+');
     this.clientRegister.form.valueChanges.subscribe(value => {
       if (cep.test(value.CepId) && value.CepId !== undefined) {
@@ -71,8 +78,12 @@ export class AccessComponent implements OnInit {
     if (this.CEPIsValid && this.PhoneIsValid && this.modelClientRegister.Name && this.modelClientRegister.Country
         && this.modelClientRegister.NumberAddress) {
           this.client.AddClient(this.modelClientRegister).subscribe(result => {
-            console.log(result);
+            // console.log(result);
           });
     }
+  }
+
+  teste(value) {
+    console.log(value);
   }
 }
