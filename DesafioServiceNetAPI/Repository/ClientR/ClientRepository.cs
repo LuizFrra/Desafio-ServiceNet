@@ -1,5 +1,6 @@
 ﻿using DesafioServiceNetAPI.Infra.Context;
 using DesafioServiceNetAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,34 +17,60 @@ namespace DesafioServiceNetAPI.Repository.ClientR
             this.desafioContext = desafioContext;
         }
 
-        public Client Add(Client Client)
+        public async Task<Client> AddAsync(Client Client)
         {
-            throw new NotImplementedException();
+            await desafioContext.AddAsync(Client);
+            var result = await desafioContext.SaveChangesAsync();
+
+            if (result == 1)
+                return await Task.FromResult(Client);
+
+            return await Task.FromResult<Client>(null);
         }
 
-        public Client Delete(int ClientId)
+        public async Task<Client> DeleteAsync(int ClientId)
         {
-            throw new NotImplementedException();
+            var client = await desafioContext.Clients.FirstOrDefaultAsync(c => c.ClientID == ClientId);
+
+            if (client == null)
+                return null;
+
+            desafioContext.Clients.Remove(client);
+            var result = await desafioContext.SaveChangesAsync();
+
+            if (result == 1)
+                return await Task.FromResult(client);
+
+            return await Task.FromResult<Client>(client);
         }
 
-        public ICollection<Client> GetAll()
+        public async Task<ICollection<Client>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var clients = await desafioContext.Clients.ToListAsync();
+
+            return clients == null ? await Task.FromResult<ICollection<Client>>(null) : await Task.FromResult(clients);
         }
 
-        public Client GetById(int Id)
+        public async Task<Client> GetByIdAsync(int Id)
         {
-            throw new NotImplementedException();
+            var client = await desafioContext.Clients.FirstOrDefaultAsync(c => c.ClientID == Id);
+
+            return client == null ? await Task.FromResult<Client>(null) : await Task.FromResult(client);
         }
 
-        public ICollection<Client> GetByName(string Name)
+        public async Task<ICollection<Client>> GetByNameAsync(string Name)
         {
-            throw new NotImplementedException();
+            var client = await desafioContext.Clients.Where(c => c.Name == Name).ToListAsync();
+
+            return client == null ? await Task.FromResult<ICollection<Client>>(null) : await Task.FromResult(client);
         }
 
-        public Client Update(Client Client)
+        public async Task<Client> UpdateAsync(Client Client)
         {
-            throw new NotImplementedException();
+            desafioContext.Update(Client);
+            var result = await desafioContext.SaveChangesAsync();
+
+            return result == 1 ? await Task.FromResult(Client) : await Task.FromResult<Client>(null);
         }
     }
 }

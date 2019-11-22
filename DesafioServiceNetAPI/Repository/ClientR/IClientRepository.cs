@@ -7,16 +7,16 @@ namespace DesafioServiceNetAPI.Repository.ClientR
 {
     public interface IClientRepository<T>
     {
-        T Add(T Client);
+        Task<T> AddAsync(T Client);
 
-        T Update(T Client);
+        Task<T> UpdateAsync(T Client);
 
-        T Delete(int ClientId);
+        Task<T> DeleteAsync(int ClientId);
 
-        T GetById(int Id);
+        Task<T> GetByIdAsync(int Id);
 
-        ICollection<T> GetByName(string Name);
+        Task<ICollection<T>> GetByNameAsync(string Name);
 
-        ICollection<T> GetAll();
+        Task<ICollection<T>> GetAllAsync();
     }
 }

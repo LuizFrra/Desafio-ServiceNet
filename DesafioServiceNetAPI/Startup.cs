@@ -17,7 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
+using MosaicoSolutions.ViaCep;
 
 namespace DesafioServiceNetAPI
 {
@@ -33,9 +33,10 @@ namespace DesafioServiceNetAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // BANCO DE DADOS
             services.AddDbContext<DesafioContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddScoped<IAuthRepository<User>, AuthRepository>();
+            // END BANCO DE DADOS
 
             // TOKEN JWT
             services.AddSingleton<PublicKey>();
@@ -59,6 +60,9 @@ namespace DesafioServiceNetAPI
             });
             // END JWT TOKEN
 
+            // VIACEP
+            services.AddSingleton<IViaCepService>(serviceProvier => ViaCepService.Default());
+            // END VIACEP
             services.AddControllers();
         }
 
