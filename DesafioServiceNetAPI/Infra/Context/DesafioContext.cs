@@ -17,11 +17,14 @@ namespace DesafioServiceNetAPI.Infra.Context
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Client> Clients { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>().ToTable("tbl_users");
+            builder.Entity<Client>().ToTable("tbl_clients");
 
             builder.ApplyConfiguration(new UserConfig());
+            builder.ApplyConfiguration(new ClientConfig());
         }
     }
 }
