@@ -17,6 +17,7 @@ export class AccessComponent implements OnInit {
   states: any = states;
   CEPIsValid: boolean;
   IsAddressPresent = true;
+  PhoneIsValid: boolean;
   constructor(private auth: AuthService, private client: ClientService) { }
 
   ngOnInit() {
@@ -47,12 +48,18 @@ export class AccessComponent implements OnInit {
       this.modelClientRegister.Address = result.body.logradouro;
       if (result.body.logradouro === '') {
         this.IsAddressPresent = false;
-        console.log('nao tem endereco');
-      } else { this.IsAddressPresent = true; console.log('tem endereco'); }
-
-      console.log(result.body.uf);
+      } else { this.IsAddressPresent = true;}
     }, error => {
       this.CEPIsValid = false;
     });
+  }
+
+  validPhone() {
+    const rgx = /^(\+[0-9]{2,3})?((\([1-9]{2}\))|([1-9]{2}))( ?9?[0-9]{4}-?[0-9]{4})$/gm;
+    const phoneNumber = this.modelClientRegister.PhoneNumber;
+    if (!rgx.test(phoneNumber)) {
+      this.PhoneIsValid = false;
+      console.log('invalido');
+    } else { this.PhoneIsValid = true; }
   }
 }

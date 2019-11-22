@@ -76,46 +76,51 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="Nome">Nome</label>
-              <input type="email" class="form-control" id="Nome" placeholder="Nome" name="name" [(ngModel)]="modelClientRegister.Name">
+              <input type="email" class="form-control" placeholder="Nome" name="name" [(ngModel)]="modelClientRegister.Name">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Telefone">Telefone</label>
-              <input type="number" class="form-control" id="Telefone" name="PhoneNumber" [(ngModel)]="modelClientRegister.PhoneNumber">
+              <input type="number" (blur)="validPhone()" class="form-control" name="PhoneNumber" [(ngModel)]="modelClientRegister.PhoneNumber"
+                  [ngClass]="{'is-valid': PhoneIsValid, 'is-invalid': PhoneIsValid === false, 'form-control': true}">
+              <div *ngIf="!PhoneIsValid" class="invalid-feedback"> Telefone Inválido. </div>
             </div>
             <div class="form-group col-md-3">
               <label for="inputZip">CEP</label>
-              <input type="text" id="CEP" name="CEP" [(ngModel)]="modelClientRegister.CEP" maxlength="9" (blur)="validCEP()" 
+              <input type="text" name="CEP" [(ngModel)]="modelClientRegister.CEP" maxlength="9" (blur)="validCEP()" 
                         [ngClass]="{'is-valid': CEPIsValid, 'is-invalid': CEPIsValid === false, 'form-control': true}">
               <div *ngIf="!CEPIsValid" class="invalid-feedback"> CEP Inválido. </div>
             </div>
             <div class="form-group col-md-6">
               <label for="Endereco">Endereço</label>
-              <input type="text" class="form-control" id="Endereco" name="Address" [(ngModel)]="modelClientRegister.Address"
+              <input type="text" class="form-control" name="Address" [(ngModel)]="modelClientRegister.Address"
                       [disabled]="IsAddressPresent">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Numero">Número</label>
-              <input type="number" class="form-control" id="Numero" name="NumberAddress" [(ngModel)]="modelClientRegister.NumberAddress">
+              <input type="number" class="form-control" name="NumberAddress" [(ngModel)]="modelClientRegister.NumberAddress">
             </div>
             <div class="form-group col-md-3">
               <label for="Cidade">Cidade</label>
-              <input type="text" class="form-control" id="Cidade" name="City" [(ngModel)]="modelClientRegister.City" disabled>
+              <input type="text" class="form-control" name="City" [(ngModel)]="modelClientRegister.City" disabled>
             </div>
             <div class="form-group col-md-3">
               <label for="Pais">País</label>
-              <input type="text" class="form-control" id="Pais" name="Country" [(ngModel)]="modelClientRegister.Country" disabled>
+              <input type="text" class="form-control" name="Country" [(ngModel)]="modelClientRegister.Country" disabled>
             </div>
             <div class="form-group col-md-3">
               <label for="Estado">Estado</label>
-              <!-- onfocus='this.size=10;' onblur='this.size=1;' onchange='this.size=1; this.blur(); -->
               <select class="form-control" name="state" [(ngModel)]="modelClientRegister.State" disabled>
                 <option *ngFor="let item of states |keyvalue" value="{{item.key}}">{{item.value}}</option>
               </select>
             </div>
+            <!-- <div class="form-group col-md-12">
+              <iframe width="600" height="200" frameborder="0" style="border:0"
+                src="https://www.google.com/maps/embed/v1/place?q=...&key=..." allowfullscreen></iframe>
+            </div> -->
           </div>
         </form>
       </div>
