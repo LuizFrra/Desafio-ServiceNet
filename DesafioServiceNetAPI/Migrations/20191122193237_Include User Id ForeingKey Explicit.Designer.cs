@@ -3,15 +3,17 @@ using System;
 using DesafioServiceNetAPI.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DesafioServiceNetAPI.Migrations
 {
     [DbContext(typeof(DesafioContext))]
-    partial class DesafioContextModelSnapshot : ModelSnapshot
+    [Migration("20191122193237_Include User Id ForeingKey Explicit")]
+    partial class IncludeUserIdForeingKeyExplicit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

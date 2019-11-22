@@ -17,6 +17,8 @@ namespace DesafioServiceNetAPI.Models
 
         public DateTime LastUpdate { get; set; }
 
+        public ICollection<Client> Clients { get; set; }
+
         public User(string name, string email, string password)
         {
             Name = name;

@@ -25,6 +25,8 @@ namespace DesafioServiceNetAPI.Infra.Context
 
             builder.ApplyConfiguration(new UserConfig());
             builder.ApplyConfiguration(new ClientConfig());
+
+            builder.Entity<Client>().HasOne(u => u.User).WithMany(c => c.Clients).IsRequired().HasForeignKey(u => u.UserID);
         }
     }
 }
