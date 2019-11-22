@@ -18,7 +18,7 @@ namespace DesafioServiceNetAPI.Repository.ClientR
 
         Task<ICollection<T>> GetByNameAsync(string Name);
 
-        Task<ICollection<T>> GetAllAsync();
+        Task<ICollection<ClientCard>> GetAllAsync(int UserId);
 
         Task<CEP> AddCep(CEP Cep);
     }

@@ -48,11 +48,22 @@ namespace DesafioServiceNetAPI.Repository.ClientR
             return await Task.FromResult<Client>(client);
         }
 
-        public async Task<ICollection<Client>> GetAllAsync()
+        public async Task<ICollection<ClientCard>> GetAllAsync(int UserId)
         {
-            var clients = await desafioContext.Clients.ToListAsync();
+            var clients = await desafioContext.Clients.Where(u => u.UserID == UserId).Select(x => new ClientCard()
+            {
+                ClientID = x.ClientID,
+                Name = x.Name, 
+                Address = x.Address + " " + x.NumberAddress, 
+                PhoneNumber = x.PhoneNumber
+            }).ToListAsync();
 
-            return clients == null ? await Task.FromResult<ICollection<Client>>(null) : await Task.FromResult(clients);
+            if(clients != null)
+            {
+                return await Task.FromResult(clients);
+            }
+
+            return await Task.FromResult<ICollection<ClientCard>>(null);
         }
 
         public async Task<Client> GetByIdAsync(int Id)
