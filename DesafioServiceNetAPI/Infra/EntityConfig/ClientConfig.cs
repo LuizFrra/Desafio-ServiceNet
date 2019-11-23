@@ -14,8 +14,6 @@ namespace DesafioServiceNetAPI.Infra.EntityConfig
         {
             builder.HasKey(k => k.ClientID);
             builder.HasIndex(n => n.Name).IsUnique(false);
-            builder.Property(d => d.LastUpdate).IsConcurrencyToken(true).IsRequired(true);
-            builder.Property(p => p.LastUpdate).HasDefaultValueSql("NOW()").ValueGeneratedOnAddOrUpdate();
             builder.Property(p => p.PhoneNumber).HasMaxLength(20).IsRequired(true);
             builder.Property(p => p.NumberAddress).HasMaxLength(10).IsRequired(true);
             builder.Property(p => p.Country).HasMaxLength(50).IsRequired(true);

@@ -57,4 +57,11 @@ export class ClientService {
     );
   }
 
+  UpdateClient(Client: any): any {
+    return this.http.put(this.baseURl + '/api/client/update', Client, { observe: 'response' }).pipe(
+      map((response: HttpResponse<any>) => {
+        return response;
+      })
+    );
+  }
 }

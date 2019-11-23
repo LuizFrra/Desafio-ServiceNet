@@ -24,7 +24,7 @@
         <p class="card-text">Telefone : {{client.phoneNumber}}</p>
         <p class="card-text">Endereço : {{client.address}}</p>
         <div class="buttons flex-row d-flex justify-content-around">
-          <a><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
+          <!-- <a><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a> -->
           <a href="#" (click)="ReadClient(client.clientID)" data-toggle="modal" data-target="#modalReadUser">
             <img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" />
           </a>
@@ -131,18 +131,18 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="Nome">Nome</label>
-              <input type="text" class="form-control" name="name" [(ngModel)]="modelRead.name" disabled>
+              <input type="text" class="form-control" name="name" [(ngModel)]="modelRead.name" [disabled]="!IsInEditionMode">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Telefone">Telefone</label>
               <input type="number" class="form-control" name="PhoneNumber" [(ngModel)]="modelRead.phoneNumber"
-                [ngClass]="{'form-control': true}" disabled>
+                [ngClass]="{'form-control': true}" [disabled]="!IsInEditionMode">
             </div>
             <div class="form-group col-md-3">
               <label for="inputZip">CEP</label>
-              <input type="text" name="CEP" [(ngModel)]="modelRead.cep" [ngClass]="{'form-control': true}" disabled>
+              <input type="text" name="CEP" [(ngModel)]="modelRead.cepId" [ngClass]="{'form-control': true}" [disabled]="!IsInEditionMode">
             </div>
             <div class="form-group col-md-6">
               <label for="Endereco">Endereço</label>
@@ -153,7 +153,7 @@
             <div class="form-group col-md-3">
               <label for="Numero">Número</label>
               <input type="number" class="form-control" name="NumberAddress" [(ngModel)]="modelRead.numberAddress"
-                disabled>
+                [disabled]="!IsInEditionMode">
             </div>
             <div class="form-group col-md-3">
               <label for="Cidade">Cidade</label>
@@ -161,7 +161,7 @@
             </div>
             <div class="form-group col-md-3">
               <label for="Pais">País</label>
-              <input type="text" class="form-control" name="Country" [(ngModel)]="modelRead.country" disabled>
+              <input type="text" class="form-control" name="Country" [(ngModel)]="modelRead.country" [disabled]="!IsInEditionMode">
             </div>
             <div class="form-group col-md-3">
               <label for="Estado">Estado</label>
@@ -173,8 +173,14 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="IsInEditionMode = false">
           Fechar
+        </button>
+        <button type="button" class="btn btn-danger" *ngIf="!IsInEditionMode" (click)="IsInEditionMode = true">
+          Editar Usuário
+        </button>
+        <button type="button" class="btn btn-danger" *ngIf="IsInEditionMode" (click)="UpdateClient()">
+          Salvar Alterações
         </button>
       </div>
     </div>

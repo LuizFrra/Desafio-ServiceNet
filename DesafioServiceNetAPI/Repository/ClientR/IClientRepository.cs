@@ -10,7 +10,7 @@ namespace DesafioServiceNetAPI.Repository.ClientR
     {
         Task<T> AddAsync(T Client);
 
-        Task<T> UpdateAsync(T Client);
+        Task<T> UpdateAsync(int UserId, T Client);
 
         Task<T> DeleteAsync(int UserId, int ClientId);
 
@@ -20,6 +20,6 @@ namespace DesafioServiceNetAPI.Repository.ClientR
 
         Task<ICollection<ClientCard>> GetAllAsync(int UserId);
 
-        Task<CEP> AddCep(CEP Cep);
+        Task<CEP> AddCepAsync(CEP Cep);
     }
 }

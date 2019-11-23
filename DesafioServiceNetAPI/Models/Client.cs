@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,8 +15,6 @@ namespace DesafioServiceNetAPI.Models
         public int UserID { get; set; }
 
         public CEP Cep { get; set; }
-
-        public DateTime LastUpdate { get; set; }
 
         public Client(string name, string phoneNumber, string address, string numberAddress, string country, int cepId, int userId)
         {

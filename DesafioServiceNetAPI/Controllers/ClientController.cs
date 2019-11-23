@@ -49,7 +49,7 @@ namespace DesafioServiceNetAPI.Controllers
                     var cepobj = obj.getCEP();
                     
                     if (cepobj != null)
-                        await clientRepository.AddCep(cepobj);
+                        await clientRepository.AddCepAsync(cepobj);
                 }
             }
             catch (CepInexistenteException e)
@@ -136,6 +136,24 @@ namespace DesafioServiceNetAPI.Controllers
                 }
             }
 
+            return Ok("Nenhum Cliente");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody]Client Client)
+        {
+            int UserId = -1;
+            int.TryParse(HttpContext.User.FindFirst("user_id").Value, out UserId);
+
+            if (UserId > 0)
+            {
+                Client.UserID = UserId;
+                var result = await clientRepository.UpdateAsync(UserId, Client);
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+            }
             return Ok("Nenhum Cliente");
         }
     }

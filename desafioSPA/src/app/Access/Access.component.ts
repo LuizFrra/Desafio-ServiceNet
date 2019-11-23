@@ -3,6 +3,7 @@ import { AuthService } from '../_services/Auth/Auth.service';
 import { states } from '../Models/States';
 import { NgForm } from '@angular/forms';
 import { ClientService } from '../_services/Client/Client.service';
+import { ClientCard } from '../Models/ClientCard';
 
 @Component({
   selector: 'app-Access',
@@ -17,9 +18,11 @@ export class AccessComponent implements OnInit {
   CEPIsValid: boolean;
   IsAddressPresent = true;
   PhoneIsValid: boolean;
-  clients: any;
+  clients: Array<ClientCard>;
   modelRead: any = { };
   ClientIdToDelete: any;
+  IsInEditionMode: boolean;
+  ClientInReadMode: number;
 
   constructor(private auth: AuthService, private client: ClientService) { }
 
@@ -27,6 +30,7 @@ export class AccessComponent implements OnInit {
 
     this.client.GetClients().subscribe(result => {
       this.clients = result.reverse();
+      // console.log(this.clients);
     });
 
     const cep = new RegExp('[aA-zZ]+');
@@ -82,6 +86,13 @@ export class AccessComponent implements OnInit {
           this.client.AddClient(this.modelClientRegister).subscribe(result => {
             console.log(result);
             if (result.status === 201) {
+              const client: ClientCard = {
+                address: result.body.address,
+                name: result.body.name,
+                clientID: result.body.clientID,
+                phoneNumber: result.body.phoneNumber
+              };
+              this.clients.unshift(client);
               this.modelClientRegister = { };
               this.PhoneIsValid = undefined;
               this.CEPIsValid = undefined;
@@ -97,27 +108,38 @@ export class AccessComponent implements OnInit {
       this.modelRead.phoneNumber = result.phoneNumber;
       this.modelRead.name = result.name;
       this.modelRead.country = result.country;
-      this.modelRead.cep = result.cep.cepID;
+      this.modelRead.cepId = result.cep.cepID;
       this.modelRead.city = result.cep.city;
       this.modelRead.state = result.cep.state;
       this.modelRead.numberAddress = result.numberAddress;
+      this.modelRead.clientID = result.clientID;
+      this.ClientInReadMode = ClientId;
     });
   }
 
   DeleteClient() {
-    console.log(this.ClientIdToDelete);
     this.client.DeleteClient(this.ClientIdToDelete).subscribe(result => {
       // console.log(result);
       if (result.status === 200) {
-        // console.log(this.clients);
         this.clients.splice(this.clients.findIndex(c => c.clientID === this.ClientIdToDelete), 1);
-        // console.log(this.clients);
       }
     });
   }
 
-  teste(value) {
-    console.log(value);
+  UpdateClient() {
+    this.client.UpdateClient(this.modelRead).subscribe(result => {
+      if (result.status === 200) {
+        console.log('Update Sucesso');
+        this.clients.splice(this.clients.findIndex(c => c.clientID === this.modelRead.cepId), 1);
+        const client: ClientCard = {
+          address: result.body.address,
+          name: result.body.name,
+          clientID: result.body.clientID,
+          phoneNumber: result.body.phoneNumber
+        };
+        this.clients.push(client);
+      }
+      this.IsInEditionMode = false;
+    });
   }
-
 }

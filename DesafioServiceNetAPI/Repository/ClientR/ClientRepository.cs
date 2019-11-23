@@ -80,15 +80,23 @@ namespace DesafioServiceNetAPI.Repository.ClientR
             return client == null ? await Task.FromResult<ICollection<Client>>(null) : await Task.FromResult(client);
         }
 
-        public async Task<Client> UpdateAsync(Client Client)
+        public async Task<Client> UpdateAsync(int UserId, Client Client)
         {
+            var clientExist = await desafioContext.Clients
+                                .AnyAsync(c => c.ClientID == Client.ClientID && c.UserID == UserId);
+
+            var CEPExist = await desafioContext.CEP.AnyAsync(c => c.CepID == Client.CepId);
+
+            if (!clientExist || !CEPExist)
+                return await Task.FromResult<Client>(null);
+            
             desafioContext.Update(Client);
             var result = await desafioContext.SaveChangesAsync();
 
             return result == 1 ? await Task.FromResult(Client) : await Task.FromResult<Client>(null);
         }
 
-        public async Task<CEP> AddCep(CEP Cep)
+        public async Task<CEP> AddCepAsync(CEP Cep)
         {
             var exist = await desafioContext.CEP.AnyAsync(c => c.CepID == Cep.CepID);
 
