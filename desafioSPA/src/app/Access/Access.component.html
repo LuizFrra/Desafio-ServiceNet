@@ -10,7 +10,8 @@
 
   <div class="card m-5 card-width">
     <div class="card-body d-flex flex-column justify-content-center align-items-center">
-      <a href="#" data-toggle="modal" data-target="#modalCadastroUsuario" class="mb-3">
+      <a href="#" (click)="DisableReadAndEdition()" data-toggle="modal" 
+              data-target="#modelClient" class="mb-3">
         <img src="../../assets/img/plus.svg" width="72" height="72" alt="" />
       </a>
       <p class="card-text">Adicionar Cliente</p>
@@ -25,10 +26,12 @@
         <p class="card-text">Endereço : {{client.address}}</p>
         <div class="buttons flex-row d-flex justify-content-around">
           <!-- <a><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a> -->
-          <a href="#" (click)="ReadClient(client.clientID)" data-toggle="modal" data-target="#modalReadUser">
+          <a href="#" (click)="ReadClient(client.clientID)" data-toggle="modal" data-target="#modelClient">
             <img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" />
           </a>
-          <a href="#" (click)="ClientIdToDelete=client.clientID" data-toggle="modal" data-target="#modalDeleta"><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
+          <a href="#" (click)="ClientIdToDelete=client.clientID" data-toggle="modal" data-target="#modalDeleta">
+            <img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" />
+          </a>
         </div>
       </div>
     </div>
@@ -38,12 +41,13 @@
 <!-- FIM CARDS -->
 
 <!-- Modal Cadastrar Usuario -->
-<div class="modal fade" id="modalCadastroUsuario" tabindex="-1" role="dialog" aria-labelledby="modalCadastroUsuario"
+<div class="modal fade" id="modelClient" tabindex="-1" role="dialog" aria-labelledby="modelClient"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cadastrar Cliente</h5>
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="!IsInReadMode" >Cadastrar Cliente</h5>
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="IsInReadMode" >Visualizador Cliente</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -53,47 +57,50 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="Nome">Nome</label>
-              <input type="text" class="form-control" placeholder="Nome" name="name"
-                [(ngModel)]="modelClientRegister.Name">
+              <input type="text" class="form-control" placeholder="Nome" name="name" [disabled]="IsInReadMode && !IsInEditionMode"
+                [(ngModel)]="modelClient.Name">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Telefone">Telefone</label>
               <input type="number" (blur)="validPhone()" class="form-control" name="PhoneNumber"
-                [(ngModel)]="modelClientRegister.PhoneNumber"
+                [(ngModel)]="modelClient.PhoneNumber" [disabled]="IsInReadMode && !IsInEditionMode"
                 [ngClass]="{'is-valid': PhoneIsValid, 'is-invalid': PhoneIsValid === false, 'form-control': true}">
               <div *ngIf="!PhoneIsValid" class="invalid-feedback"> Telefone Inválido. </div>
             </div>
             <div class="form-group col-md-3">
               <label for="inputZip">CEP</label>
-              <input type="text" name="CEP" [(ngModel)]="modelClientRegister.CepId" maxlength="9" (blur)="validCEP()"
-                [ngClass]="{'is-valid': CEPIsValid, 'is-invalid': CEPIsValid === false, 'form-control': true}">
+              <input type="text" name="CEP" [(ngModel)]="modelClient.CepId" maxlength="9" (blur)="validCEP()"
+                            [ngClass]="{'is-valid': CEPIsValid, 'is-invalid': CEPIsValid === false, 'form-control': true}"
+                                                                                [disabled]="IsInReadMode && !IsInEditionMode"  >
               <div *ngIf="!CEPIsValid" class="invalid-feedback"> CEP Inválido. </div>
             </div>
             <div class="form-group col-md-6">
               <label for="Endereco">Endereço</label>
-              <input type="text" class="form-control" name="Address" [(ngModel)]="modelClientRegister.Address"
-                [disabled]="IsAddressPresent">
+              <input type="text" class="form-control" name="Address" [(ngModel)]="modelClient.Address"
+                [disabled]="IsAddressPresent || (IsInReadMode && !IsInEditionMode)">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Numero">Número</label>
-              <input type="number" class="form-control" name="NumberAddress"
-                [(ngModel)]="modelClientRegister.NumberAddress">
+              <input type="number" class="form-control" name="NumberAddress" [disabled]="IsInReadMode && !IsInEditionMode"
+                [(ngModel)]="modelClient.NumberAddress">
             </div>
             <div class="form-group col-md-3">
               <label for="Cidade">Cidade</label>
-              <input type="text" class="form-control" name="City" [(ngModel)]="modelClientRegister.City" disabled>
+              <input type="text" class="form-control" name="City" [(ngModel)]="modelClient.City" 
+                disabled>
             </div>
             <div class="form-group col-md-3">
               <label for="Pais">País</label>
-              <input type="text" class="form-control" name="Country" [(ngModel)]="modelClientRegister.Country">
+              <input type="text" class="form-control" name="Country" [(ngModel)]="modelClient.Country"
+                                                                      [disabled]="IsInReadMode && !IsInEditionMode">
             </div>
             <div class="form-group col-md-3">
               <label for="Estado">Estado</label>
-              <select class="form-control" name="state" [(ngModel)]="modelClientRegister.State" disabled>
+              <select class="form-control" name="state" [(ngModel)]="modelClient.State" disabled>
                 <option *ngFor="let item of states |keyvalue" value="{{item.key}}">{{item.value}}</option>
               </select>
             </div>
@@ -108,75 +115,8 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Fechar
         </button>
-        <button type="button" class="btn btn-primary" (click)="AddClient()">Finalizar Cadastro</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Fim Modal Cadastrar Usuario -->
-
-<!-- Modal Read Usuario -->
-<div class="modal fade" id="modalReadUser" tabindex="-1" role="dialog" aria-labelledby="modalReadUser"
-  aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Visualizador Clientes</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form #clientRegister="ngForm">
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="Nome">Nome</label>
-              <input type="text" class="form-control" name="name" [(ngModel)]="modelRead.name" [disabled]="!IsInEditionMode">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-3">
-              <label for="Telefone">Telefone</label>
-              <input type="number" class="form-control" name="PhoneNumber" [(ngModel)]="modelRead.phoneNumber"
-                [ngClass]="{'form-control': true}" [disabled]="!IsInEditionMode">
-            </div>
-            <div class="form-group col-md-3">
-              <label for="inputZip">CEP</label>
-              <input type="text" name="CEP" [(ngModel)]="modelRead.cepId" [ngClass]="{'form-control': true}" [disabled]="!IsInEditionMode">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="Endereco">Endereço</label>
-              <input type="text" class="form-control" name="Address" [(ngModel)]="modelRead.address" disabled>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-3">
-              <label for="Numero">Número</label>
-              <input type="number" class="form-control" name="NumberAddress" [(ngModel)]="modelRead.numberAddress"
-                [disabled]="!IsInEditionMode">
-            </div>
-            <div class="form-group col-md-3">
-              <label for="Cidade">Cidade</label>
-              <input type="text" class="form-control" name="City" [(ngModel)]="modelRead.city" disabled>
-            </div>
-            <div class="form-group col-md-3">
-              <label for="Pais">País</label>
-              <input type="text" class="form-control" name="Country" [(ngModel)]="modelRead.country" [disabled]="!IsInEditionMode">
-            </div>
-            <div class="form-group col-md-3">
-              <label for="Estado">Estado</label>
-              <select class="form-control" name="state" [(ngModel)]="modelRead.state" disabled>
-                <option *ngFor="let item of states |keyvalue" value="{{item.key}}">{{item.value}}</option>
-              </select>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="IsInEditionMode = false">
-          Fechar
-        </button>
-        <button type="button" class="btn btn-danger" *ngIf="!IsInEditionMode" (click)="IsInEditionMode = true">
+        <button type="button" *ngIf="!IsInReadMode" class="btn btn-primary" (click)="AddClient()">Finalizar Cadastro</button>
+        <button type="button" class="btn btn-danger" *ngIf="!IsInEditionMode && IsInReadMode" (click)="IsInEditionMode = true">
           Editar Usuário
         </button>
         <button type="button" class="btn btn-danger" *ngIf="IsInEditionMode" (click)="UpdateClient()">
@@ -186,7 +126,7 @@
     </div>
   </div>
 </div>
-<!-- Fim Modal Read Usuario -->
+<!-- Fim Modal Cadastrar Usuario -->
 
 <!-- Modal Deletar Usuário -->
 <div class="modal fade" id="modalDeleta" tabindex="-1" role="dialog" aria-labelledby="modalDeleta"

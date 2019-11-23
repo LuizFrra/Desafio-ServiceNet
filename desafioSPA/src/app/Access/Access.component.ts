@@ -13,16 +13,17 @@ import { ClientCard } from '../Models/ClientCard';
 export class AccessComponent implements OnInit {
 
   @ViewChild('clientRegister', { static: true }) clientRegister: NgForm;
-  modelClientRegister: any = { };
+  modelClient: any = {};
   states: any = states;
   CEPIsValid: boolean;
   IsAddressPresent = true;
   PhoneIsValid: boolean;
   clients: Array<ClientCard>;
-  modelRead: any = { };
+  modelRead: any = {};
   ClientIdToDelete: any;
   IsInEditionMode: boolean;
   ClientInReadMode: number;
+  IsInReadMode: boolean;
 
   constructor(private auth: AuthService, private client: ClientService) { }
 
@@ -46,7 +47,7 @@ export class AccessComponent implements OnInit {
 
   validCEP() {
     const rgxCep = new RegExp('^[0-9]{5}-?[\\d]{3}$');
-    const CepId =  this.modelClientRegister.CepId;
+    const CepId = this.modelClient.CepId;
     if (!rgxCep.test(CepId)) {
       this.CEPIsValid = false;
       return;
@@ -55,12 +56,12 @@ export class AccessComponent implements OnInit {
     this.client.ViaCEP(CepId).subscribe(result => {
       this.CEPIsValid = true;
       // console.log(result.body);
-      this.modelClientRegister.State = result.body.uf;
-      this.modelClientRegister.City = result.body.localidade;
-      this.modelClientRegister.Address = result.body.logradouro;
+      this.modelClient.State = result.body.uf;
+      this.modelClient.City = result.body.localidade;
+      this.modelClient.Address = result.body.logradouro;
       if (result.body.logradouro === '') {
         this.IsAddressPresent = false;
-      } else { this.IsAddressPresent = true;}
+      } else { this.IsAddressPresent = true; }
     }, error => {
       this.CEPIsValid = false;
     });
@@ -68,7 +69,7 @@ export class AccessComponent implements OnInit {
 
   validPhone() {
     const rgx = /^((\([1-9]{2}\))|([1-9]{2}))( ?9?[0-9]{4}-?[0-9]{4})$/gm;
-    const phoneNumber = this.modelClientRegister.PhoneNumber;
+    const phoneNumber = this.modelClient.PhoneNumber;
     if (!rgx.test(phoneNumber)) {
       this.PhoneIsValid = false;
       // console.log('invalido');
@@ -76,43 +77,45 @@ export class AccessComponent implements OnInit {
   }
 
   AddClient() {
-    this.modelClientRegister.PhoneNumber = this.modelClientRegister.PhoneNumber.toString();
-    this.modelClientRegister.CepId = parseInt(this.modelClientRegister.CepId.toString().replace('-', ''), 10);
-    this.modelClientRegister.NumberAddress = this.modelClientRegister.NumberAddress.toString();
+    this.modelClient.PhoneNumber = this.modelClient.PhoneNumber.toString();
+    this.modelClient.CepId = parseInt(this.modelClient.CepId.toString().replace('-', ''), 10);
+    this.modelClient.NumberAddress = this.modelClient.NumberAddress.toString();
 
-    // console.log(this.modelClientRegister);
-    if (this.CEPIsValid && this.PhoneIsValid && this.modelClientRegister.Name && this.modelClientRegister.Country
-        && this.modelClientRegister.NumberAddress) {
-          this.client.AddClient(this.modelClientRegister).subscribe(result => {
-            console.log(result);
-            if (result.status === 201) {
-              const client: ClientCard = {
-                address: result.body.address,
-                name: result.body.name,
-                clientID: result.body.clientID,
-                phoneNumber: result.body.phoneNumber
-              };
-              this.clients.unshift(client);
-              this.modelClientRegister = { };
-              this.PhoneIsValid = undefined;
-              this.CEPIsValid = undefined;
-            }
-          });
+    // console.log(this.modelClient);
+    if (this.CEPIsValid && this.PhoneIsValid && this.modelClient.Name && this.modelClient.Country
+      && this.modelClient.NumberAddress) {
+      this.client.AddClient(this.modelClient).subscribe(result => {
+        // console.log(result);
+        if (result.status === 201) {
+          const client: ClientCard = {
+            address: result.body.address,
+            name: result.body.name,
+            clientID: result.body.clientID,
+            phoneNumber: result.body.phoneNumber
+          };
+          this.clients.unshift(client);
+          this.modelClient = {};
+          this.PhoneIsValid = undefined;
+          this.CEPIsValid = undefined;
+        }
+      });
     }
   }
 
   ReadClient(ClientId) {
+    this.IsInReadMode = true;
+    this.IsInEditionMode = false;
     this.client.GetClientById(ClientId).subscribe(result => {
       // console.log(result);
-      this.modelRead.address = result.address;
-      this.modelRead.phoneNumber = result.phoneNumber;
-      this.modelRead.name = result.name;
-      this.modelRead.country = result.country;
-      this.modelRead.cepId = result.cep.cepID;
-      this.modelRead.city = result.cep.city;
-      this.modelRead.state = result.cep.state;
-      this.modelRead.numberAddress = result.numberAddress;
-      this.modelRead.clientID = result.clientID;
+      this.modelClient.Address = result.address;
+      this.modelClient.PhoneNumber = result.phoneNumber;
+      this.modelClient.Name = result.name;
+      this.modelClient.Country = result.country;
+      this.modelClient.CepId = result.cep.cepID;
+      this.modelClient.City = result.cep.city;
+      this.modelClient.State = result.cep.state;
+      this.modelClient.NumberAddress = result.numberAddress;
+      this.modelClient.clientID = result.clientID;
       this.ClientInReadMode = ClientId;
     });
   }
@@ -127,10 +130,10 @@ export class AccessComponent implements OnInit {
   }
 
   UpdateClient() {
-    this.client.UpdateClient(this.modelRead).subscribe(result => {
+    this.client.UpdateClient(this.modelClient).subscribe(result => {
       if (result.status === 200) {
         console.log('Update Sucesso');
-        this.clients.splice(this.clients.findIndex(c => c.clientID === this.modelRead.cepId), 1);
+        this.clients.splice(this.clients.findIndex(c => c.clientID === this.modelClient.CepId), 1);
         const client: ClientCard = {
           address: result.body.address,
           name: result.body.name,
@@ -141,5 +144,9 @@ export class AccessComponent implements OnInit {
       }
       this.IsInEditionMode = false;
     });
+  }
+  DisableReadAndEdition() {
+    this.IsInReadMode = false;
+    this.IsInEditionMode = false;
   }
 }

@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   login() {
-    console.log(this.modelLogin);
+    // console.log(this.modelLogin);
     this.authService.login(this.modelLogin).subscribe(response => {
       if (response === 200) {
         console.log('logged In');
