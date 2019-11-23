@@ -19,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MosaicoSolutions.ViaCep;
+using Newtonsoft.Json;
 
 namespace DesafioServiceNetAPI
 {
@@ -65,7 +66,7 @@ namespace DesafioServiceNetAPI
             // VIACEP
             services.AddSingleton<IViaCepService>(serviceProvier => ViaCepService.Default());
             // END VIACEP
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

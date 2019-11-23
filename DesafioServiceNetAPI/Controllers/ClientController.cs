@@ -100,7 +100,25 @@ namespace DesafioServiceNetAPI.Controllers
                 }
             }
 
-            return Ok();
+            return Ok("Nenhum Cliente");
+        }
+
+        [HttpGet("/api/client/getbyid/{ClientId}")]
+        public async Task<IActionResult> GetById(int ClientId)
+        {
+            int UserId = -1;
+            int.TryParse(HttpContext.User.FindFirst("user_id").Value, out UserId);
+
+            if (UserId > 0)
+            {
+                var result = await clientRepository.GetByIdAsync(UserId, ClientId);
+                if(result != null)
+                {
+                    return Ok(result);
+                }
+            }
+
+            return Ok("Nenhum Cliente");
         }
     }
 }

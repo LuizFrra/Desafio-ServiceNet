@@ -66,9 +66,9 @@ namespace DesafioServiceNetAPI.Repository.ClientR
             return await Task.FromResult<ICollection<ClientCard>>(null);
         }
 
-        public async Task<Client> GetByIdAsync(int Id)
-        {
-            var client = await desafioContext.Clients.FirstOrDefaultAsync(c => c.ClientID == Id);
+        public async Task<Client> GetByIdAsync(int UserId, int ClientId)
+        { 
+            var client = await desafioContext.Clients.Include(c => c.Cep).FirstOrDefaultAsync(c => c.ClientID == ClientId && c.UserID == UserId);
 
             return client == null ? await Task.FromResult<Client>(null) : await Task.FromResult(client);
         }
