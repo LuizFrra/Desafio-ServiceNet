@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DesafioServiceNetAPI.Facebook;
 using DesafioServiceNetAPI.JWT.Handler;
 using DesafioServiceNetAPI.Models;
 using DesafioServiceNetAPI.Repository.Auth;
@@ -19,8 +20,11 @@ namespace DesafioServiceNetAPI.Controller
 
         private IJwtHandler jwtHandler;
 
-        public AuthController(IAuthRepository<User> authRepository, IJwtHandler jwtHandler)
+        private FaceBookHandler faceBookHandler;
+
+        public AuthController(IAuthRepository<User> authRepository, IJwtHandler jwtHandler, FaceBookHandler faceBookHandler)
         {
+            this.faceBookHandler = faceBookHandler;
             this.jwtHandler = jwtHandler;
             this.authRepository = authRepository;
         }
@@ -52,6 +56,18 @@ namespace DesafioServiceNetAPI.Controller
             var token = jwtHandler.Create(userLogged);
 
             return Ok(token);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FaceBookLogin([FromBody]string UserToken)
+        {
+            await faceBookHandler.ValidToken(UserToken);
+            return Ok();
+        }
+
+        public string oi()
+        {
+            return "Oi";
         }
     }
 }

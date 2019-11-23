@@ -12,6 +12,7 @@ using DesafioServiceNetAPI.Repository.ClientR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -40,6 +41,11 @@ namespace DesafioServiceNetAPI
             services.AddScoped<IAuthRepository<User>, AuthRepository>();
             services.AddScoped<IClientRepository<Client>, ClientRepository>();
             // END BANCO DE DADOS
+
+            // FACEBOOK
+            services.Configure<Facebook.FaceBookSettings>(Configuration.GetSection("facebook"));
+            services.AddSingleton<Facebook.FaceBookHandler>();
+            // FIM FACEBOOK
 
             // TOKEN JWT
             services.AddSingleton<PublicKey>();

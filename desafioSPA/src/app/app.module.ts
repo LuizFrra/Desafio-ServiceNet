@@ -13,8 +13,20 @@ import { ClientService } from './_services/Client/Client.service';
 import { HttpInterceptorService } from './_services/HttpInterceptor/HttpInterceptor.service';
 import { PathLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
+import { FBService } from './_services/FB/FB.service';
 
-// export const options: Partial<IConfig> | (() => Partial<IConfig>);
+const config = new AuthServiceConfig([
+   {
+      id: FacebookLoginProvider.PROVIDER_ID,
+      provider: new FacebookLoginProvider('2411188055863087')
+   }
+]);
+
+export function provideConfig() {
+   return config;
+}
 
 @NgModule({
    declarations: [
@@ -29,7 +41,8 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
       FormsModule,
       NgxMaskModule.forRoot({
          validation: true,
-       }),
+      }),
+      SocialLoginModule
    ],
    providers: [
       AuthService,
@@ -38,8 +51,13 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
       JwtHelperService,
       ClientService,
       Location,
-      {provide: LocationStrategy, useClass: PathLocationStrategy},
-      { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}
+      { provide: LocationStrategy, useClass: PathLocationStrategy },
+      { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
+      {
+         provide: AuthServiceConfig,
+         useFactory: provideConfig
+      },
+      FBService
    ],
    bootstrap: [
       AppComponent
