@@ -16,7 +16,7 @@ namespace DesafioServiceNetAPI.Models
 
         public CEP Cep { get; set; }
 
-        public Client(string name, string phoneNumber, string address, string numberAddress, string country, int cepId, int userId)
+        public Client(string name, string phoneNumber, string address, string numberAddress, string country, string cepId, int userId)
         {
             Name = name;
             PhoneNumber = phoneNumber;

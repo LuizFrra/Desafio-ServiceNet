@@ -18,7 +18,7 @@ namespace DesafioServiceNetAPI.Infra.EntityConfig
             builder.Property(p => p.NumberAddress).HasMaxLength(10).IsRequired(true);
             builder.Property(p => p.Country).HasMaxLength(50).IsRequired(true);
             builder.Property(p => p.Address).HasMaxLength(70).IsRequired(true);
-            builder.Property(p => p.CepId).IsRequired(true);
+            builder.Property(p => p.CepId).IsRequired(true).HasMaxLength(8);
         }
     }
 }

@@ -19,10 +19,9 @@ namespace DesafioServiceNetAPI.Models
 
         public CEP getCEP()
         {
-            int cepI = 0;
-            if (int.TryParse(cep.Replace("-", ""), out cepI))
+            if (!string.IsNullOrEmpty(cep))
             {
-                return new CEP(localidade, uf, cepI);
+                return new CEP(localidade, uf, Convert.ToString(cep));
             }
             return null;
         }

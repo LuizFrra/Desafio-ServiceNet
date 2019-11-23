@@ -8,11 +8,11 @@ namespace DesafioServiceNetAPI.Models
 {
     public class CEP
     {
-        public CEP(string city, string state, int cepID)
+        public CEP(string city, string state, string cepID)
         {
             City = city;
             State = state;
-            CepID = cepID;
+            CepID = cepID.Replace("-", "");
         }
 
         [Required(ErrorMessage = "Atributo City é Obrigatório.")]
@@ -23,7 +23,7 @@ namespace DesafioServiceNetAPI.Models
 
         [Required(ErrorMessage = "Atributo CEP é Obrigatório")]
         [RegularExpression("^[0-9]{5}-?[\\d]{3}$", ErrorMessage = "CEP Inválido")]
-        public int CepID { get; set; }
+        public string CepID { get; set; }
 
         public ICollection<Client> Clients { get; set; }
     }

@@ -20,8 +20,9 @@ namespace DesafioServiceNetAPI.Migrations
 
             modelBuilder.Entity("DesafioServiceNetAPI.Models.CEP", b =>
                 {
-                    b.Property<int>("CepID")
-                        .HasColumnType("integer");
+                    b.Property<string>("CepID")
+                        .HasColumnType("character varying(8)")
+                        .HasMaxLength(8);
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -50,8 +51,10 @@ namespace DesafioServiceNetAPI.Migrations
                         .HasColumnType("character varying(70)")
                         .HasMaxLength(70);
 
-                    b.Property<int>("CepId")
-                        .HasColumnType("integer");
+                    b.Property<string>("CepId")
+                        .IsRequired()
+                        .HasColumnType("character varying(8)")
+                        .HasMaxLength(8);
 
                     b.Property<string>("Country")
                         .IsRequired()

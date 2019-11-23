@@ -4,12 +4,14 @@ import { states } from '../Models/States';
 import { NgForm } from '@angular/forms';
 import { ClientService } from '../_services/Client/Client.service';
 import { ClientCard } from '../Models/ClientCard';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-Access',
   templateUrl: './Access.component.html',
   styleUrls: ['./Access.component.css']
 })
+
 export class AccessComponent implements OnInit {
 
   @ViewChild('clientRegister', { static: true }) clientRegister: NgForm;
@@ -24,8 +26,10 @@ export class AccessComponent implements OnInit {
   IsInEditionMode: boolean;
   ClientInReadMode: number;
   IsInReadMode: boolean;
+  googleRequest: any;
+  isMapSet: boolean;
 
-  constructor(private auth: AuthService, private client: ClientService) { }
+  constructor(private auth: AuthService, private client: ClientService, public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
 
@@ -61,7 +65,14 @@ export class AccessComponent implements OnInit {
       this.modelClient.Address = result.body.logradouro;
       if (result.body.logradouro === '') {
         this.IsAddressPresent = false;
-      } else { this.IsAddressPresent = true; }
+        this.isMapSet = false;
+      } else {
+        this.IsAddressPresent = true;
+        const apiUrl = this.client.getAPIString(result.body.localidade, result.body.logradouro, CepId);
+        this.googleRequest = this.sanitizer.bypassSecurityTrustResourceUrl(apiUrl);
+        // this.client.getAPIString(result.body.localidade, result.body.logradouro, CepId);
+        this.isMapSet = true;
+      }
     }, error => {
       this.CEPIsValid = false;
     });
@@ -78,7 +89,7 @@ export class AccessComponent implements OnInit {
 
   AddClient() {
     this.modelClient.PhoneNumber = this.modelClient.PhoneNumber.toString();
-    this.modelClient.CepId = parseInt(this.modelClient.CepId.toString().replace('-', ''), 10);
+    this.modelClient.CepId = this.modelClient.CepId.toString().replace('-', '');
     this.modelClient.NumberAddress = this.modelClient.NumberAddress.toString();
 
     // console.log(this.modelClient);
@@ -117,6 +128,10 @@ export class AccessComponent implements OnInit {
       this.modelClient.NumberAddress = result.numberAddress;
       this.modelClient.clientID = result.clientID;
       this.ClientInReadMode = ClientId;
+      const apiUrl = this.client.getAPIString(this.modelClient.City, this.modelClient.Address, this.modelClient.CepId,
+        this.modelClient.NumberAddress);
+      this.googleRequest = this.sanitizer.bypassSecurityTrustResourceUrl(apiUrl);
+      this.isMapSet = true;
     });
   }
 
@@ -140,13 +155,32 @@ export class AccessComponent implements OnInit {
           clientID: result.body.clientID,
           phoneNumber: result.body.phoneNumber
         };
+        const apiUrl = this.client.getAPIString(this.modelClient.City, this.modelClient.Address, this.modelClient.CepId,
+          this.modelClient.NumberAddress);
+        this.googleRequest = this.sanitizer.bypassSecurityTrustResourceUrl(apiUrl);
+        this.isMapSet = true;
         this.clients.push(client);
+        this.PhoneIsValid = undefined;
+        this.CEPIsValid = undefined;
       }
       this.IsInEditionMode = false;
     });
   }
+
   DisableReadAndEdition() {
     this.IsInReadMode = false;
     this.IsInEditionMode = false;
+    this.isMapSet = false;
+    this.googleRequest = undefined;
+  }
+
+  EnderecoOnBlur() {
+    if (this.modelClient.Address !== '') {
+      const apiUrl = this.client.getAPIString(this.modelClient.City, this.modelClient.Address, this.modelClient.CepId,
+                                                                  this.modelClient.NumberAddress);
+      this.googleRequest = this.sanitizer.bypassSecurityTrustResourceUrl(apiUrl);
+      console.log(apiUrl);
+      this.isMapSet = true;
+    } else { this.isMapSet = false; }
   }
 }

@@ -41,7 +41,8 @@ namespace DesafioServiceNetAPI.Controllers
             string jsonEndereco = null;
             try
             {
-                jsonEndereco = await viaCepService.ObterEnderecoComoJsonAsync(cep.Replace("-", ""));
+                cep = cep.Replace("-", "");
+                jsonEndereco = await viaCepService.ObterEnderecoComoJsonAsync(cep);
                 
                 var obj = JsonConvert.DeserializeObject<ViaCepReturn>(jsonEndereco);
                 if (obj != null)

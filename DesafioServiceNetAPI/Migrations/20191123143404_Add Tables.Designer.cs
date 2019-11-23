@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DesafioServiceNetAPI.Migrations
 {
     [DbContext(typeof(DesafioContext))]
-    [Migration("20191123115624_Add Tables")]
+    [Migration("20191123143404_Add Tables")]
     partial class AddTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,8 +22,9 @@ namespace DesafioServiceNetAPI.Migrations
 
             modelBuilder.Entity("DesafioServiceNetAPI.Models.CEP", b =>
                 {
-                    b.Property<int>("CepID")
-                        .HasColumnType("integer");
+                    b.Property<string>("CepID")
+                        .HasColumnType("character varying(8)")
+                        .HasMaxLength(8);
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -52,8 +53,10 @@ namespace DesafioServiceNetAPI.Migrations
                         .HasColumnType("character varying(70)")
                         .HasMaxLength(70);
 
-                    b.Property<int>("CepId")
-                        .HasColumnType("integer");
+                    b.Property<string>("CepId")
+                        .IsRequired()
+                        .HasColumnType("character varying(8)")
+                        .HasMaxLength(8);
 
                     b.Property<string>("Country")
                         .IsRequired()

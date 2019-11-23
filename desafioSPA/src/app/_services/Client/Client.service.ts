@@ -64,4 +64,11 @@ export class ClientService {
       })
     );
   }
+
+  getAPIString(cidade: string, rua: string, cep: number, numero = -1): string {
+    let parameter = cidade.replace(/ /g, '+') + '+' + rua.replace(/ /g, '+');
+    if (numero !== -1) { parameter += '+' + numero.toString(); }
+    parameter += '+' + cep.toString();
+    return environment.googleAPIUrl + parameter + environment.googleAPIKey;
+  }
 }

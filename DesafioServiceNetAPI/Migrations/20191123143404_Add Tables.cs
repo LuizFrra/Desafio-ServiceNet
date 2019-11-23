@@ -11,7 +11,7 @@ namespace DesafioServiceNetAPI.Migrations
                 name: "tbl_ceps",
                 columns: table => new
                 {
-                    CepID = table.Column<int>(nullable: false),
+                    CepID = table.Column<string>(maxLength: 8, nullable: false),
                     City = table.Column<string>(maxLength: 50, nullable: false),
                     State = table.Column<string>(maxLength: 20, nullable: false)
                 },
@@ -46,7 +46,7 @@ namespace DesafioServiceNetAPI.Migrations
                     Address = table.Column<string>(maxLength: 70, nullable: false),
                     NumberAddress = table.Column<string>(maxLength: 10, nullable: false),
                     Country = table.Column<string>(maxLength: 50, nullable: false),
-                    CepId = table.Column<int>(nullable: false),
+                    CepId = table.Column<string>(maxLength: 8, nullable: false),
                     UserID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

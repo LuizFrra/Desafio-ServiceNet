@@ -13,7 +13,7 @@ namespace DesafioServiceNetAPI.Infra.EntityConfig
         public void Configure(EntityTypeBuilder<CEP> builder)
         {
             builder.HasKey(k => k.CepID);
-            builder.Property(p => p.CepID).ValueGeneratedNever();
+            builder.Property(p => p.CepID).ValueGeneratedNever().HasMaxLength(8);
             builder.Property(p => p.State).IsRequired(true).HasMaxLength(20);
             builder.Property(p => p.City).IsRequired(true).HasMaxLength(50);
         }

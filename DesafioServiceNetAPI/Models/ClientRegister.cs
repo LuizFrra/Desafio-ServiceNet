@@ -26,7 +26,7 @@ namespace DesafioServiceNetAPI.Models
 
         [Required(ErrorMessage = "Atributo CEP é Obrigatório")]
         [RegularExpression("^[0-9]{5}-?[\\d]{3}$", ErrorMessage = "CEP Inválido")]
-        public int CepId { get; set; }
+        public string CepId { get; set; }
 
         public Client getClient(int UserId)
         {
