@@ -49,4 +49,12 @@ export class ClientService {
     );
   }
 
+  DeleteClient(ClientId: number): any {
+    return this.http.delete(this.baseURl + '/api/client/delete/' + ClientId, { observe: 'response' }).pipe(
+      map((response: HttpResponse<any>) => {
+        return response;
+      })
+    );
+  }
+
 }

@@ -32,7 +32,7 @@ export class AccessComponent implements OnInit {
     const cep = new RegExp('[aA-zZ]+');
     this.clientRegister.form.valueChanges.subscribe(value => {
       if (cep.test(value.CepId) && value.CepId !== undefined) {
-        console.log('cep nao ta valido');
+        // console.log('cep nao ta valido');
         this.CEPIsValid = false;
       } else if (value.CepId !== undefined && value.CepId !== '') {
         this.CEPIsValid = true;
@@ -50,7 +50,7 @@ export class AccessComponent implements OnInit {
 
     this.client.ViaCEP(CepId).subscribe(result => {
       this.CEPIsValid = true;
-      console.log(result.body);
+      // console.log(result.body);
       this.modelClientRegister.State = result.body.uf;
       this.modelClientRegister.City = result.body.localidade;
       this.modelClientRegister.Address = result.body.logradouro;
@@ -67,7 +67,7 @@ export class AccessComponent implements OnInit {
     const phoneNumber = this.modelClientRegister.PhoneNumber;
     if (!rgx.test(phoneNumber)) {
       this.PhoneIsValid = false;
-      console.log('invalido');
+      // console.log('invalido');
     } else { this.PhoneIsValid = true; }
   }
 
@@ -75,11 +75,12 @@ export class AccessComponent implements OnInit {
     this.modelClientRegister.PhoneNumber = this.modelClientRegister.PhoneNumber.toString();
     this.modelClientRegister.CepId = parseInt(this.modelClientRegister.CepId.toString().replace('-', ''), 10);
     this.modelClientRegister.NumberAddress = this.modelClientRegister.NumberAddress.toString();
-    console.log(this.modelClientRegister);
+
+    // console.log(this.modelClientRegister);
     if (this.CEPIsValid && this.PhoneIsValid && this.modelClientRegister.Name && this.modelClientRegister.Country
         && this.modelClientRegister.NumberAddress) {
           this.client.AddClient(this.modelClientRegister).subscribe(result => {
-            // console.log(result);
+            console.log(result);
             if (result.status === 201) {
               this.modelClientRegister = { };
               this.PhoneIsValid = undefined;
@@ -91,7 +92,7 @@ export class AccessComponent implements OnInit {
 
   ReadClient(ClientId) {
     this.client.GetClientById(ClientId).subscribe(result => {
-      console.log(result);
+      // console.log(result);
       this.modelRead.address = result.address;
       this.modelRead.phoneNumber = result.phoneNumber;
       this.modelRead.name = result.name;
@@ -105,6 +106,14 @@ export class AccessComponent implements OnInit {
 
   DeleteClient() {
     console.log(this.ClientIdToDelete);
+    this.client.DeleteClient(this.ClientIdToDelete).subscribe(result => {
+      // console.log(result);
+      if (result.status === 200) {
+        // console.log(this.clients);
+        this.clients.splice(this.clients.findIndex(c => c.clientID === this.ClientIdToDelete), 1);
+        // console.log(this.clients);
+      }
+    });
   }
 
   teste(value) {

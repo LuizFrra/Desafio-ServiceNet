@@ -121,7 +121,7 @@ namespace DesafioServiceNetAPI.Controllers
             return Ok("Nenhum Cliente");
         }
 
-        [HttpGet("/api/client/delete/{ClientId}")]
+        [HttpDelete("/api/client/delete/{ClientId}")]
         public async Task<IActionResult> Delete(int ClientId)
         {
             int UserId = -1;

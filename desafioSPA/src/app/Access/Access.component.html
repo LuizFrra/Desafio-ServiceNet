@@ -23,7 +23,6 @@
         <h5 class="card-title">{{client.name}}</h5>
         <p class="card-text">Telefone : {{client.phoneNumber}}</p>
         <p class="card-text">Endereço : {{client.address}}</p>
-        <p class="card-text">Pais : mangabeira</p>
         <div class="buttons flex-row d-flex justify-content-around">
           <a><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
           <a href="#" (click)="ReadClient(client.clientID)" data-toggle="modal" data-target="#modalReadUser">
@@ -193,7 +192,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-        <button (click)="DeleteClient()" type="button" class="btn btn-primary">Confirmar</button>
+        <button (click)="DeleteClient()" type="button" class="btn btn-primary" data-dismiss="modal">Confirmar</button>
       </div>
     </div>
   </div>

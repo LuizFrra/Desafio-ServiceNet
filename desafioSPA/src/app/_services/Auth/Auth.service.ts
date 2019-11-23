@@ -19,9 +19,7 @@ constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     console.log(this.baseURl + '/api/auth/register');
     return this.http.post(this.baseURl + '/api/auth/register', model, { observe: 'response' }).pipe(
       map((response: HttpResponseBase) => {
-        if (response.status === 201) {
-          console.log('do something');
-        }
+        return response;
       })
     );
   }
