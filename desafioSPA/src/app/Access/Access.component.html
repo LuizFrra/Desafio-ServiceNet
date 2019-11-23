@@ -64,14 +64,14 @@
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Telefone">Telefone</label>
-              <input type="number" (blur)="validPhone()" class="form-control" name="PhoneNumber"
-                [(ngModel)]="modelClient.PhoneNumber" [disabled]="IsInReadMode && !IsInEditionMode"
+              <input type="text" (blur)="validPhone()" class="form-control" name="PhoneNumber"
+                [(ngModel)]="modelClient.PhoneNumber" [disabled]="IsInReadMode && !IsInEditionMode" mask="(00) 00000-0000"
                 [ngClass]="{'is-valid': PhoneIsValid, 'is-invalid': PhoneIsValid === false, 'form-control': true}">
               <div *ngIf="!PhoneIsValid" class="invalid-feedback"> Telefone Inválido. </div>
             </div>
             <div class="form-group col-md-3">
               <label for="inputZip">CEP</label>
-              <input type="text" name="CEP" [(ngModel)]="modelClient.CepId" maxlength="9" (blur)="validCEP()"
+              <input type="text" name="CEP" [(ngModel)]="modelClient.CepId" maxlength="9" (blur)="validCEP()" mask="00000-000"
                             [ngClass]="{'is-valid': CEPIsValid, 'is-invalid': CEPIsValid === false, 'form-control': true}"
                                                                                 [disabled]="IsInReadMode && !IsInEditionMode"  >
               <div *ngIf="!CEPIsValid" class="invalid-feedback"> CEP Inválido. </div>
@@ -134,7 +134,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Deseja Realmente Apagar o Usuário ?</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Deseja Realmente Apagar o Cliente ?</h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>

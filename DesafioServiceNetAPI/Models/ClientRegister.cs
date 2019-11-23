@@ -12,7 +12,7 @@ namespace DesafioServiceNetAPI.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Atributo PhoneNumber é Obrigatório")]
-        [RegularExpression("^(\\+[0-9]{2,3})?((\\([1-9]{2}\\))|([1-9]{2}))( ?9?[0-9]{4}-?[0-9]{4})$", ErrorMessage = "Telefone Inválido")]
+        [RegularExpression("^[1-9]{2}9[1-9]{1}[1-9]{7}$", ErrorMessage = "Telefone Inválido")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Atributo Address é Obrigatório")]

@@ -79,19 +79,19 @@ export class AccessComponent implements OnInit {
   }
 
   validPhone() {
-    const rgx = /^((\([1-9]{2}\))|([1-9]{2}))( ?9?[0-9]{4}-?[0-9]{4})$/gm;
+    const rgx = /^[1-9]{2}9[1-9]{1}[1-9]{7}$/gm;
     const phoneNumber = this.modelClient.PhoneNumber;
-    if (!rgx.test(phoneNumber)) {
-      this.PhoneIsValid = false;
+    console.log(phoneNumber);
+    if (rgx.test(phoneNumber)) {
+      this.PhoneIsValid = true;
       // console.log('invalido');
-    } else { this.PhoneIsValid = true; }
+    } else { this.PhoneIsValid = false; }
   }
 
   AddClient() {
     this.modelClient.PhoneNumber = this.modelClient.PhoneNumber.toString();
     this.modelClient.CepId = this.modelClient.CepId.toString().replace('-', '');
-    this.modelClient.NumberAddress = this.modelClient.NumberAddress.toString();
-
+    this.modelClient.NumberAddress = this.modelClient.NumberAddress;
     // console.log(this.modelClient);
     if (this.CEPIsValid && this.PhoneIsValid && this.modelClient.Name && this.modelClient.Country
       && this.modelClient.NumberAddress) {
@@ -116,6 +116,8 @@ export class AccessComponent implements OnInit {
   ReadClient(ClientId) {
     this.IsInReadMode = true;
     this.IsInEditionMode = false;
+    this.PhoneIsValid = undefined;
+    this.CEPIsValid = undefined;
     this.client.GetClientById(ClientId).subscribe(result => {
       // console.log(result);
       this.modelClient.Address = result.address;
@@ -172,6 +174,9 @@ export class AccessComponent implements OnInit {
     this.IsInEditionMode = false;
     this.isMapSet = false;
     this.googleRequest = undefined;
+    this.modelClient = { };
+    this.PhoneIsValid = undefined;
+    this.CEPIsValid = undefined;
   }
 
   EnderecoOnBlur() {

@@ -12,6 +12,9 @@ import { JwtHelperService, JwtModuleOptions, JWT_OPTIONS } from '@auth0/angular-
 import { ClientService } from './_services/Client/Client.service';
 import { HttpInterceptorService } from './_services/HttpInterceptor/HttpInterceptor.service';
 import { PathLocationStrategy, LocationStrategy } from '@angular/common';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
+// export const options: Partial<IConfig> | (() => Partial<IConfig>);
 
 @NgModule({
    declarations: [
@@ -23,7 +26,10 @@ import { PathLocationStrategy, LocationStrategy } from '@angular/common';
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
-      FormsModule
+      FormsModule,
+      NgxMaskModule.forRoot({
+         validation: true,
+       }),
    ],
    providers: [
       AuthService,
