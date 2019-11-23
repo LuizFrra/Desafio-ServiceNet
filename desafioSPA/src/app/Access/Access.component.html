@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <div class="card m-5 card-width">
+  <!-- <div class="card m-5 card-width">
     <div class="card-body">
       <h5 class="card-title">Maria Joana</h5>
       <p class="card-text">Telefone : 81992332232</p>
@@ -29,7 +29,7 @@
         <a><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <ng-container *ngFor="let client of clients">
     <div class="card m-5 card-width">
@@ -39,9 +39,10 @@
         <p class="card-text">Endereço : {{client.address}}</p>
         <p class="card-text">Pais : mangabeira</p>
         <div class="buttons flex-row d-flex justify-content-around">
-          <a (click)="teste(client.clientID)"><img src="../../assets/img/document.svg" height="30px" width="30px"
-              alt="" /></a>
-          <a href="#"><img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" /></a>
+          <a><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
+          <a (click)="ReadClient(client.clientID)"  data-toggle="modal" data-target="#modalReadUser">
+            <img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" />
+          </a>
           <a href="#"><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
         </div>
       </div>
@@ -65,7 +66,7 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label for="Nome">Nome</label>
-              <input type="email" class="form-control" placeholder="Nome" name="name"
+              <input type="text" class="form-control" placeholder="Nome" name="name"
                 [(ngModel)]="modelClientRegister.Name">
             </div>
           </div>
@@ -128,4 +129,66 @@
 <!-- Fim Modal Cadastrar Usuario -->
 
 <!-- Modal Read Usuario -->
+<div class="modal fade" id="modalReadUser" tabindex="-1" role="dialog" aria-labelledby="modalReadUser"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Visualizador Clientes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #clientRegister="ngForm">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="Nome">Nome</label>
+              <input type="text" class="form-control" name="name" [(ngModel)]="modelRead.name" disabled>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="Telefone">Telefone</label>
+              <input type="number" class="form-control" name="PhoneNumber" [(ngModel)]="modelRead.phoneNumber" 
+                    [ngClass]="{'form-control': true}" disabled>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="inputZip">CEP</label>
+              <input type="text" name="CEP" [(ngModel)]="modelRead.cep" [ngClass]="{'form-control': true}" disabled>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="Endereco">Endereço</label>
+              <input type="text" class="form-control" name="Address" [(ngModel)]="modelRead.address" disabled>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label for="Numero">Número</label>
+              <input type="number" class="form-control" name="NumberAddress" [(ngModel)]="modelRead.numberAddress" disabled>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="Cidade">Cidade</label>
+              <input type="text" class="form-control" name="City" [(ngModel)]="modelRead.city" disabled>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="Pais">País</label>
+              <input type="text" class="form-control" name="Country" [(ngModel)]="modelRead.country" disabled>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="Estado">Estado</label>
+              <select class="form-control" name="state" [(ngModel)]="modelRead.state" disabled>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Fim Modal Read Usuario -->

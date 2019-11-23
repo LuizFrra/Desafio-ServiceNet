@@ -18,6 +18,7 @@ export class AccessComponent implements OnInit {
   IsAddressPresent = true;
   PhoneIsValid: boolean;
   clients: any;
+  modelRead: any = { };
   constructor(private auth: AuthService, private client: ClientService) { }
 
   ngOnInit() {
@@ -83,7 +84,12 @@ export class AccessComponent implements OnInit {
     }
   }
 
+  ReadClient(ClientId) {
+    console.log(ClientId);
+  }
+
   teste(value) {
     console.log(value);
   }
+
 }
