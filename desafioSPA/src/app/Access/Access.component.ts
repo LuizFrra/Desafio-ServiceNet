@@ -19,13 +19,14 @@ export class AccessComponent implements OnInit {
   PhoneIsValid: boolean;
   clients: any;
   modelRead: any = { };
+  ClientIdToDelete: any;
+
   constructor(private auth: AuthService, private client: ClientService) { }
 
   ngOnInit() {
 
     this.client.GetClients().subscribe(result => {
-      console.log(result);
-      this.clients = result;
+      this.clients = result.reverse();
     });
 
     const cep = new RegExp('[aA-zZ]+');
@@ -62,7 +63,6 @@ export class AccessComponent implements OnInit {
   }
 
   validPhone() {
-    // (\+[0-9]{2,3})?
     const rgx = /^((\([1-9]{2}\))|([1-9]{2}))( ?9?[0-9]{4}-?[0-9]{4})$/gm;
     const phoneNumber = this.modelClientRegister.PhoneNumber;
     if (!rgx.test(phoneNumber)) {
@@ -73,19 +73,38 @@ export class AccessComponent implements OnInit {
 
   AddClient() {
     this.modelClientRegister.PhoneNumber = this.modelClientRegister.PhoneNumber.toString();
-    this.modelClientRegister.CepId = parseInt(this.modelClientRegister.CepId, 10);
+    this.modelClientRegister.CepId = parseInt(this.modelClientRegister.CepId.toString().replace('-', ''), 10);
     this.modelClientRegister.NumberAddress = this.modelClientRegister.NumberAddress.toString();
     console.log(this.modelClientRegister);
     if (this.CEPIsValid && this.PhoneIsValid && this.modelClientRegister.Name && this.modelClientRegister.Country
         && this.modelClientRegister.NumberAddress) {
           this.client.AddClient(this.modelClientRegister).subscribe(result => {
             // console.log(result);
+            if (result.status === 201) {
+              this.modelClientRegister = { };
+              this.PhoneIsValid = undefined;
+              this.CEPIsValid = undefined;
+            }
           });
     }
   }
 
   ReadClient(ClientId) {
-    console.log(ClientId);
+    this.client.GetClientById(ClientId).subscribe(result => {
+      console.log(result);
+      this.modelRead.address = result.address;
+      this.modelRead.phoneNumber = result.phoneNumber;
+      this.modelRead.name = result.name;
+      this.modelRead.country = result.country;
+      this.modelRead.cep = result.cep.cepID;
+      this.modelRead.city = result.cep.city;
+      this.modelRead.state = result.cep.state;
+      this.modelRead.numberAddress = result.numberAddress;
+    });
+  }
+
+  DeleteClient() {
+    console.log(this.ClientIdToDelete);
   }
 
   teste(value) {

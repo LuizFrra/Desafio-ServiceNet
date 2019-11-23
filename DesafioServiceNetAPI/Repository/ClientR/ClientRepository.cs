@@ -32,9 +32,9 @@ namespace DesafioServiceNetAPI.Repository.ClientR
             return await Task.FromResult<Client>(null);
         }
 
-        public async Task<Client> DeleteAsync(int ClientId)
+        public async Task<Client> DeleteAsync(int UserId, int ClientId)
         {
-            var client = await desafioContext.Clients.FirstOrDefaultAsync(c => c.ClientID == ClientId);
+            var client = await desafioContext.Clients.FirstOrDefaultAsync(c => c.ClientID == ClientId && c.UserID == UserId);
 
             if (client == null)
                 return null;

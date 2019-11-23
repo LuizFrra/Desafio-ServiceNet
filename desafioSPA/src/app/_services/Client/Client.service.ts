@@ -10,22 +10,22 @@ import { JsonPipe } from '@angular/common';
 export class ClientService {
 
   private baseURl: string;
-  private options = { headers: new HttpHeaders().set('Content-Type', 'application/json'), observe: 'response' as 'body'};
+  private options = { headers: new HttpHeaders().set('Content-Type', 'application/json'), observe: 'response' as 'body' };
 
   constructor(private http: HttpClient) {
-  this.baseURl = environment.hostName + ':' + environment.port;
- }
+    this.baseURl = environment.hostName + ':' + environment.port;
+  }
 
- ViaCEP(CEP: string) {
-  return this.http.post(this.baseURl + '/api/client/ObterEndereco', JSON.stringify(CEP), this.options).pipe(
-    map((response: HttpResponse<any>) => {
-      return response;
-    }
-  ));
-}
+  ViaCEP(CEP: string) {
+    return this.http.post(this.baseURl + '/api/client/ObterEndereco', JSON.stringify(CEP), this.options).pipe(
+      map((response: HttpResponse<any>) => {
+        return response;
+      }
+      ));
+  }
 
   AddClient(model: any) {
-    return this.http.post(this.baseURl + '/api/client/add', model, { observe: 'response'}).pipe(
+    return this.http.post(this.baseURl + '/api/client/add', model, { observe: 'response' }).pipe(
       map((response: HttpResponse<any>) => {
         // console.log(response);
         return response;
@@ -35,6 +35,14 @@ export class ClientService {
 
   GetClients(): any {
     return this.http.get(this.baseURl + '/api/client/getall').pipe(
+      map((response: HttpResponse<any>) => {
+        return response;
+      })
+    );
+  }
+
+  GetClientById(ClientId: number): any {
+    return this.http.get(this.baseURl + '/api/client/getbyid/' + ClientId).pipe(
       map((response: HttpResponse<any>) => {
         return response;
       })

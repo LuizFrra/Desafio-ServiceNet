@@ -120,5 +120,23 @@ namespace DesafioServiceNetAPI.Controllers
 
             return Ok("Nenhum Cliente");
         }
+
+        [HttpGet("/api/client/delete/{ClientId}")]
+        public async Task<IActionResult> Delete(int ClientId)
+        {
+            int UserId = -1;
+            int.TryParse(HttpContext.User.FindFirst("user_id").Value, out UserId);
+
+            if (UserId > 0)
+            {
+                var result = await clientRepository.DeleteAsync(UserId, ClientId);
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+            }
+
+            return Ok("Nenhum Cliente");
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace DesafioServiceNetAPI.Repository.ClientR
 
         Task<T> UpdateAsync(T Client);
 
-        Task<T> DeleteAsync(int ClientId);
+        Task<T> DeleteAsync(int UserId, int ClientId);
 
         Task<T> GetByIdAsync(int UserId, int ClientId);
 

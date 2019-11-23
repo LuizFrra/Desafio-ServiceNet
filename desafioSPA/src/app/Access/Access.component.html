@@ -5,9 +5,9 @@
   <div class="bg-dark flex-grow-1 d-flex flex-row justify-content-end"></div>
 </div>
 
-<!-- cards -->
-
+<!-- INICIO CARDS -->
 <div class=" d-flex flex-row flex-wrap justify-content-start">
+
   <div class="card m-5 card-width">
     <div class="card-body d-flex flex-column justify-content-center align-items-center">
       <a href="#" data-toggle="modal" data-target="#modalCadastroUsuario" class="mb-3">
@@ -16,20 +16,6 @@
       <p class="card-text">Adicionar Cliente</p>
     </div>
   </div>
-
-  <!-- <div class="card m-5 card-width">
-    <div class="card-body">
-      <h5 class="card-title">Maria Joana</h5>
-      <p class="card-text">Telefone : 81992332232</p>
-      <p class="card-text">Estado : paraiba</p>
-      <p class="card-text">Pais : mangabeira</p>
-      <div class="buttons flex-row d-flex justify-content-around">
-        <a (click)="teste()"><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
-        <a><img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" /></a>
-        <a><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
-      </div>
-    </div>
-  </div> -->
 
   <ng-container *ngFor="let client of clients">
     <div class="card m-5 card-width">
@@ -40,15 +26,17 @@
         <p class="card-text">Pais : mangabeira</p>
         <div class="buttons flex-row d-flex justify-content-around">
           <a><img src="../../assets/img/document.svg" height="30px" width="30px" alt="" /></a>
-          <a (click)="ReadClient(client.clientID)"  data-toggle="modal" data-target="#modalReadUser">
+          <a href="#" (click)="ReadClient(client.clientID)" data-toggle="modal" data-target="#modalReadUser">
             <img src="../../assets/img/edit.svg" height="30px" width="30px" alt="" />
           </a>
-          <a href="#"><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
+          <a href="#" (click)="ClientIdToDelete=client.clientID" data-toggle="modal" data-target="#modalDeleta"><img src="../../assets/img/delete.svg" height="30px" width="30px" alt="" /></a>
         </div>
       </div>
     </div>
   </ng-container>
+
 </div>
+<!-- FIM CARDS -->
 
 <!-- Modal Cadastrar Usuario -->
 <div class="modal fade" id="modalCadastroUsuario" tabindex="-1" role="dialog" aria-labelledby="modalCadastroUsuario"
@@ -150,8 +138,8 @@
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Telefone">Telefone</label>
-              <input type="number" class="form-control" name="PhoneNumber" [(ngModel)]="modelRead.phoneNumber" 
-                    [ngClass]="{'form-control': true}" disabled>
+              <input type="number" class="form-control" name="PhoneNumber" [(ngModel)]="modelRead.phoneNumber"
+                [ngClass]="{'form-control': true}" disabled>
             </div>
             <div class="form-group col-md-3">
               <label for="inputZip">CEP</label>
@@ -165,7 +153,8 @@
           <div class="form-row">
             <div class="form-group col-md-3">
               <label for="Numero">Número</label>
-              <input type="number" class="form-control" name="NumberAddress" [(ngModel)]="modelRead.numberAddress" disabled>
+              <input type="number" class="form-control" name="NumberAddress" [(ngModel)]="modelRead.numberAddress"
+                disabled>
             </div>
             <div class="form-group col-md-3">
               <label for="Cidade">Cidade</label>
@@ -178,6 +167,7 @@
             <div class="form-group col-md-3">
               <label for="Estado">Estado</label>
               <select class="form-control" name="state" [(ngModel)]="modelRead.state" disabled>
+                <option *ngFor="let item of states |keyvalue" value="{{item.key}}">{{item.value}}</option>
               </select>
             </div>
           </div>
@@ -192,3 +182,20 @@
   </div>
 </div>
 <!-- Fim Modal Read Usuario -->
+
+<!-- Modal Deletar Usuário -->
+<div class="modal fade" id="modalDeleta" tabindex="-1" role="dialog" aria-labelledby="modalDeleta"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Deseja Realmente Apagar o Usuário ?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+        <button (click)="DeleteClient()" type="button" class="btn btn-primary">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FIM Modal Deletar Usuário -->
