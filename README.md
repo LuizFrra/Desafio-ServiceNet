@@ -1,6 +1,6 @@
 # Desafio-ServiceNet
 Repositório responsável por conter o densenvolvimento de um sistema web simplificado, proposto por um <a href="https://drive.google.com/open?id=18OhTQEQ2h-tMfxKH8DWpMDF4om6_0TvB">desafio da ServiceNet</a>.
-Para isso foi construído uma API utilizando o Framework .Net Core, banco de dados postgres e o front-end em angular.
+Para isso foi construído uma API utilizando o Framework .Net Core, banco de dados postgres e o angular e BootStrap para a construção da aplicação.
 
 ## Recursos Utilizados: :computer:
 Para o desenvolvimento do projeto foi utilizado as seguintes aplicações/Frameworks :
