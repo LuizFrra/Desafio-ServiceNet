@@ -1,0 +1,25 @@
+# INSTALANDO NODE E DEPENDENCIAS PARA BUILD DO PROJETO #
+
+FROM node:12.11.1 as build
+
+RUN npm install -g @angular/cli@8.3.8
+
+WORKDIR /desafiospa
+
+COPY package.json /desafiospa/package.json
+
+RUN npm install
+
+COPY . /desafiospa
+
+RUN ng build --configuration=production
+
+#------------------------------------------------ nginx -----------------------------------------------#
+
+FROM nginx
+
+COPY --from=build /desafiospa/dist/desafioSPA/ /usr/share/nginx/html/
+
+WORKDIR /usr/share/nginx/html/
+
+RUN ls -al

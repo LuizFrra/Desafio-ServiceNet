@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild, ɵConsole } from '@angular/core';
 import { AuthService } from '../_services/Auth/Auth.service';
-import { states } from '../Models/States';
-import { NgForm } from '@angular/forms';
 import { ClientService } from '../_services/Client/Client.service';
+import { states } from '../Models/States';
 import { ClientCard } from '../Models/ClientCard';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({

@@ -1,9 +1,7 @@
+import { AuthService } from '../_services/Auth/Auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../_services/Auth/Auth.service';
-import { Router } from "@angular/router"
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { FBService } from '../_services/FB/FB.service';
+import { Router } from '@angular/router';
 import { delay } from 'q';
 
 @Component({
@@ -24,7 +22,7 @@ export class HomeComponent implements OnInit {
   FailInLogin: boolean;
   SucefullRegister: boolean;
 
-  constructor(private authService: AuthService, private route: Router, private fb: FBService) { }
+  constructor(private authService: AuthService, private route: Router) { }
 
   ngOnInit() {
     if (this.authService.isAuthenticated) {

@@ -8,25 +8,11 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './_services/Auth/Auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GuardService } from './_services/Guard/Guard.service';
-import { JwtHelperService, JwtModuleOptions, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ClientService } from './_services/Client/Client.service';
 import { HttpInterceptorService } from './_services/HttpInterceptor/HttpInterceptor.service';
 import { PathLocationStrategy, LocationStrategy } from '@angular/common';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
-import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
-import { GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
-import { FBService } from './_services/FB/FB.service';
-
-const config = new AuthServiceConfig([
-   {
-      id: FacebookLoginProvider.PROVIDER_ID,
-      provider: new FacebookLoginProvider('2411188055863087')
-   }
-]);
-
-export function provideConfig() {
-   return config;
-}
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
    declarations: [
@@ -42,22 +28,16 @@ export function provideConfig() {
       NgxMaskModule.forRoot({
          validation: true,
       }),
-      SocialLoginModule
    ],
    providers: [
-      AuthService,
-      GuardService,
       { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+      GuardService,
       JwtHelperService,
-      ClientService,
-      Location,
+      // Location,
       { provide: LocationStrategy, useClass: PathLocationStrategy },
       { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
-      {
-         provide: AuthServiceConfig,
-         useFactory: provideConfig
-      },
-      FBService
+      AuthService,
+      ClientService,
    ],
    bootstrap: [
       AppComponent

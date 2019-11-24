@@ -1,0 +1,23 @@
+# INSTALA SDK PARA BUILD
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 as build-net
+
+WORKDIR /desafioAPI
+
+COPY *.csproj /desafioAPI
+
+RUN dotnet restore
+
+COPY . /desafioAPI
+
+RUN dotnet publish DesafioServiceNetAPI.sln -o publish
+
+# RUN TIME PARA EXECUÇÃO
+
+FROM mcr.microsoft.com/dotnet/core/runtime:3.0
+
+WORKDIR /desafioAPI
+
+COPY --from=build-net /desafioAPI/publish/ .
+
+ENTRYPOINT [ "dotnet",  "DesafioServiceNetAPI.dll" ] 
