@@ -47,5 +47,8 @@ Por default, a aplicação angular estará rodando na portar 4200, a api na port
 
 Você pode alterar as portas e outras variáveis no arquivo [docker-compose.yml], qualquer alteração na string de conexão deve ser refletica no arquivo [Dockerfile] do banco de dados que se encontra na pasta [Postgres].
 
+## Aplicação Rodando no Heroku
+A Aplicação pode ser acessada através do heroku <a href="https://desafiospa.herokuapp.com/">aqui</a>.
+
 ## Aplicação Rodando em VPS
-A Aplicação estará temporariamente acessível <a href="http://78.47.19.185:4200/">aqui</a>
+A Aplicação estará temporariamente acessível <a href="http://78.47.19.185:4200/">aqui</a>.
