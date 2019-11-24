@@ -33,7 +33,6 @@ import { NgxMaskModule } from 'ngx-mask';
       { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
       GuardService,
       JwtHelperService,
-      // Location,
       { provide: LocationStrategy, useClass: PathLocationStrategy },
       { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
       AuthService,

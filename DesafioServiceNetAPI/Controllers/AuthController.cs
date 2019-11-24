@@ -65,9 +65,13 @@ namespace DesafioServiceNetAPI.Controller
             return Ok();
         }
 
-        public string oi()
+        [HttpGet("/api/[controller]/[action]/{email}")]
+        public async Task<IActionResult> EmailExist(string email)
         {
-            return "Oi";
+            if (string.IsNullOrEmpty(email) || string.IsNullOrWhiteSpace(email))
+                return BadRequest();
+
+            return Ok(await authRepository.EmailExist(email));
         }
     }
 }

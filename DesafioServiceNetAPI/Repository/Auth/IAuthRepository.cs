@@ -14,5 +14,7 @@ namespace DesafioServiceNetAPI.Repository.Auth
         Task<T> LoginAsync(string email, string password);
 
         IList<string> ObterErros();
+
+        Task<bool> EmailExist(string email);
     }
 }

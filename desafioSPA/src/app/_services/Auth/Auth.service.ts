@@ -59,4 +59,16 @@ constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     return '';
   }
 
+  public emailExist(email: string) {
+    console.log(this.baseURl);
+    return this.http.get(this.baseURl + '/api/auth/emailexist/' + email, {observe: 'response'}).pipe(
+      map((response: HttpResponse<any>) => {
+        return response;
+      })
+    );
+  }
+
+  public logout() {
+    localStorage.removeItem('token');
+  }
 }

@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   modelLogin: any = {};
   FailInLogin: boolean;
   SucefullRegister: boolean;
+  EmailIsInvalidEmailExist: boolean;
 
   constructor(private authService: AuthService, private route: Router) { }
 
@@ -40,6 +41,7 @@ export class HomeComponent implements OnInit {
       if (change.Email !== undefined && change.Email !== Email) {
         Email = change.Email;
         this.EmailIsValid = emailRegex.test(Email);
+        this.EmailIsInvalidEmailExist = false;
       }
       if (change.Password !== undefined && change.Password !== Password) {
         Password = change.Password;
@@ -57,7 +59,7 @@ export class HomeComponent implements OnInit {
         console.log('Erro ao Registrar:\n');
         console.log(error);
       });
-      this.zerarInputs();
+      // this.zerarInputs();
     }
   }
 
@@ -83,15 +85,15 @@ export class HomeComponent implements OnInit {
     this.NameIsValid = undefined;
   }
 
-  loginWithFacebook() {
-    // this.fb.getFbStatus().subscribe((result) => {
-    //   console.log(result);
-    //   if (result === null) { this.fb.signInWithFB(); }
-    //   if (result !== null) { console.log('chama api pra login'); }
-    // });
-    // this.fb.signInWithFB();
-    // this.fb.getFbStatus().subscribe((result) => {
-    //   console.log(result);
-    // });
+  EmailExist() {
+    if (this.EmailIsValid === true) {
+      this.authService.emailExist(this.modelRegister.Email).subscribe(result => {
+        console.log(result);
+        if (result.body === true) {
+          this.EmailIsValid = false;
+          this.EmailIsInvalidEmailExist = true;
+        }
+      });
+    }
   }
 }

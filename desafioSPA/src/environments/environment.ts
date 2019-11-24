@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  hostName: 'http://localhost',
-  port: 5500,
+  hostName: 'http://192.168.0.40',
+  port: 5000,
   googleAPIKey: '&key=AIzaSyD-j1wRL4IwEApRgy6-mjhhqHzGnlkUibI',
   googleAPIUrl: 'https://www.google.com/maps/embed/v1/place?q='
 };

@@ -5,6 +5,7 @@ import { ClientCard } from '../Models/ClientCard';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-Access',
@@ -29,7 +30,7 @@ export class AccessComponent implements OnInit {
   googleRequest: any;
   isMapSet: boolean;
 
-  constructor(private auth: AuthService, private client: ClientService, public sanitizer: DomSanitizer) { }
+  constructor(private auth: AuthService, private client: ClientService, public sanitizer: DomSanitizer, private router: Router) { }
 
   ngOnInit() {
 
@@ -187,5 +188,10 @@ export class AccessComponent implements OnInit {
       console.log(apiUrl);
       this.isMapSet = true;
     } else { this.isMapSet = false; }
+  }
+
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/']);
   }
 }

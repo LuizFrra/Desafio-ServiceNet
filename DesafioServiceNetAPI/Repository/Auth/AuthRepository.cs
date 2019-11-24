@@ -81,5 +81,12 @@ namespace DesafioServiceNetAPI.Repository.Auth
 
             return true ;
         }
+
+        public async Task<bool> EmailExist(string email)
+        {
+            var emailExist = await desafioContext.Users.AnyAsync(u => u.Email == email);
+
+            return await Task.FromResult(emailExist);
+        }
     }
 }
