@@ -6,7 +6,7 @@ Para isso foi construído uma API utilizando o Framework .Net Core, banco de dad
 Para o desenvolvimento do projeto foi utilizado as seguintes aplicações/Frameworks :
 
 * Banco de Dados
-    -[PostgreSQL](https://www.postgresql.org/download/)
+    - [PostgreSQL](https://www.postgresql.org/download/)
 
 * Containers
     - [Docker E Docker-Compose](https://www.docker.com/)
@@ -28,4 +28,16 @@ Caso resolva usar o Visual Studio como IDE, durante a sua instalação procure i
     - ASP.NET & Web Development;
     - .NET Core Cross-Platform Development;
     
- 
+## Executando o Projeto Localment :fire:
+Se estiver utilizando linux é preciso ir até a pasta desafioSPA e executar este comando :
+```
+> chmod u+x env_setup.sh
+```
+Em seguida basta digitar o seguinte comando na pasta raiz :
+```
+>  docker-compose build --no-cache && docker-compose up --force-recreate
+
+```
+Por default, a aplicação angular estará rodando na portar 4200, a api na porta 5000 e o banco de dados na porta 5432.
+
+Você pode alterar as portas e outras variáveis no arquivo [docker-compose.yml], qualquer alteração na string de conexão deve ser refletica no arquivo [Dockerfile] do banco de dados que se encontra na pasta [Postgres].
