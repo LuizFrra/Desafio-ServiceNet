@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     let Name;
     let Email;
     let Password;
-    const emailRegex = new RegExp('^[^\s@]+@[^\s@]+\.[^\s@]+$');
+    const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     this.registerForm.valueChanges.subscribe(change => {
       if (change.Name !== undefined && change.Name !== Name) {
         Name = change.Name;
