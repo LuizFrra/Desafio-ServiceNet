@@ -1,6 +1,6 @@
 # Desafio-ServiceNet
 Repositório responsável por conter o densenvolvimento de um sistema web simplificado, proposto por um <a href="https://drive.google.com/open?id=18OhTQEQ2h-tMfxKH8DWpMDF4om6_0TvB">desafio da ServiceNet</a>.
-Para isso foi construído uma API utilizando o Framework .Net Core, banco de dados postgres e o angular e BootStrap para a construção da aplicação.
+Para isso foi construído uma API com autenticação JWT utilizando o Framework .Net Core, banco de dados postgres e o angular e BootStrap para a construção da aplicação.
 
 ## Recursos Utilizados: :computer:
 Para o desenvolvimento do projeto foi utilizado as seguintes aplicações/Frameworks :
@@ -29,7 +29,10 @@ Caso resolva usar o Visual Studio como IDE, durante a sua instalação procure i
     - .NET Core Cross-Platform Development;
     
 ## Executando o Projeto Localmente :fire:
-> __DockerToolBox__: Caso utilize o DockerToolBox, o ip que deve ser passado na string de conexão do serviço backend e do argumento no serviço fronted, deve ser o da máquina docker, bem como as requisições através do browser devem ser feitas a esse ip na porta da aplicação.
+> __DockerToolBox/DockerMachine__: Caso utilize o DockerToolBox, o ip que deve ser passado na string de conexão do serviço backend e do argumento no serviço frontend, deve ser o da máquina docker, bem como as requisições através do browser devem ser feitas a esse ip na porta da aplicação, para obter o ip digite o seguinte comando :
+```
+docker-machine ip
+```
 
 Se estiver utilizando linux é preciso ir até a pasta desafioSPA e executar este comando :
 ```
