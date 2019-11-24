@@ -29,7 +29,7 @@ Caso resolva usar o Visual Studio como IDE, durante a sua instalação procure i
     - .NET Core Cross-Platform Development;
     
 ## Executando o Projeto Localmente :fire:
-> __DockerToolBox__: Caso utilize o DockerToolBox, o ip que deve ser passado na string de conexão do serviço backend e do argumento no serviço fronted, deve ser o da máquina docker, bem como as requisições através do browser devem ser feitas a esse ip na porta da aplicação.
+> __DockerToolBox/DockerMachine__: Caso utilize o DockerToolBox, o ip que deve ser passado na string de conexão do serviço backend e do argumento no serviço fronted, deve ser o da máquina docker, bem como as requisições através do browser devem ser feitas a esse ip na porta da aplicação.
 
 Se estiver utilizando linux é preciso ir até a pasta desafioSPA e executar este comando :
 ```
