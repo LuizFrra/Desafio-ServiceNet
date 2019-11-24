@@ -36,6 +36,10 @@ namespace DesafioServiceNetAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // CORS
+            services.AddCors();
+            // END CORS
+
             // BANCO DE DADOS
             services.AddDbContext<DesafioContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IAuthRepository<User>, AuthRepository>();

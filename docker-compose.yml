@@ -4,33 +4,32 @@ services:
     build: ./DesafioServiceNetAPI/.
     image: srpoe/desafioapi
     ports:
-      - "5500:80"
+      - "5000:80"
     environment:
-      ConnectionStrings:DefaultConnection: "Host=78.47.19.185;Database=desafio;Username=postgres;Password=123456"
+      ConnectionStrings:DefaultConnection: "Host=192.168.99.100;Database=desafio;Username=postgres;Password=123456"
     networks: 
       - desafio
     depends_on:
       - postgres-db
     
-    frontend:
-      build: ./desafioSPA/.
-      image: srpoe/desafiospa
-      networks: 
-        - desafio
-      ports:
-        - "6000:80"
-      depends_on:
-        - backend
+  frontend:
+    build: ./desafioSPA/.
+    image: srpoe/desafiospa
+    networks: 
+      - desafio
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
     
-    postgres-db:
-      image: "postgres"
-      networks: :
-        - desafio
-      environment:
-        POSTGRES_USER: "postgres"
-        POSTGRES_PASSWORD: "123456"
-        POSTGRES_DB: "desafio"
-
+  postgres-db:
+    build: ./Postgres/.
+    image: srpoe/desafiodb
+    ports:
+      - "5432:5432"
+    networks:
+      - desafio
+      
 networks: 
   desafio:
     driver: bridge
